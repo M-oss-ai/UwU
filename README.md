@@ -15,7 +15,7 @@ If you whant tu us emojis in your comment you can use 🤐, all emoji after are 
 
 #### Exemple
 ```python
-Lettres Ignored🤐 ❤️Emoji Ignored❤️
+Lettres Ignored🤐 ❤️🌷Emoji Ignored🌷❤️
 ```
 ### Hello World
 To begin the tradition is to write a Hello Word in the console. 
@@ -25,6 +25,7 @@ The function `print` is 🪶
 🪶🐷♓📦😦🛴🛴🅾️⚰🐷〰️📦🅾️®️🛴🆔‼️📦
 ```
 Rendu : 
+    
 `Hello World!`
 
 ### Convertion Table
@@ -94,8 +95,11 @@ When two valur that have not the same type or are boolean or None type they are 
 🪶🕳️🕳️📦
 ```
 Rendu : 
+    
 `a 1`
+
 `True False`
+
 `None None`
 
 
@@ -106,7 +110,9 @@ When two value that are str or int type they are link like :
 🪶0️⃣1️⃣0️⃣📦
 ```
 Rendu : 
+    
 `ab`
+
 `10`
 
 You can use the ⛓️‍💥 to separate two value white a `, ` like :
@@ -116,7 +122,9 @@ You can use the ⛓️‍💥 to separate two value white a `, ` like :
 🪶0️⃣⛓️‍💥1️⃣0️⃣📦
 ```
 Rendu : 
+    
 `a b`
+
 `0 10`
 
 
@@ -129,11 +137,12 @@ You can have list in list.
 🪶🌜🅰️⛓️‍💥🅱️0️⃣⛓️‍💥1️⃣0️⃣🟢🔴🕳️🌜🌛🌛📦
 ```
 Rendu : 
+    
 `[a, b, 0, 10, True, False, None, []]`
 
 ### Function
 | Emoji | Function | Description
-|----|-------|
+|----|---------|-----------------|
 | 🪶 | `print` | same alse python
 | 🐷 | `upper` | same alse python
 | 🏷️ | `type` | same alse python
@@ -155,6 +164,7 @@ You can use a function in a function like :
 🪶🅰️🐷🅱️📦©️📦
 ```
 Rendu : 
+    
 `aBc`
 
 
