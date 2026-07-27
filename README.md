@@ -1,2 +1,167 @@
-# -
-🧑‍💻ℹ️⌨️👩‍💻🖱️
+# UwU Script
+The UwU Script is a programmation lungage **only** white emojis.
+He is hevenly inspard from Python.
+
+
+## Documentation
+🤐🅰️🅱️©️🆔😦🔥🦍♓ℹ️🎷🔑🛴Ⓜ️🆖🅾️🅿️🔍®️💲👕⛎🚗〰️🐦🦞💤⚰‼️👊👇0️⃣1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣7️⃣8️⃣9️⃣🟢🔴🕳️
+🤐🪶🐷🏷️🔢🔤⚖️🧮📏🔽🔼🗂️🙅🏁
+🤐📦⛓️‍💥🌜🌛🤔😌😏🫷
+🤐➕➖➗🪵🪙✖️⚡🟥🟰🚫💪🤏🤝
+### Comment
+Scripts that are not emojis are ignored.
+Space and Tabulations are not in sintaxe.
+If you whant tu us emojis in your comment you can use 🤐, all emoji after are ignored as well.
+
+#### Exemple
+```python
+Lettres Ignored🤐 ❤️Emoji Ignored❤️
+```
+### Hello World
+To begin the tradition is to write a Hello Word in the console. 
+The function `print` is 🪶
+
+```python
+🪶🐷♓📦😦🛴🛴🅾️⚰🐷〰️📦🅾️®️🛴🆔‼️📦
+```
+Rendu : 
+`Hello World!`
+
+### Convertion Table
+
+| Emoji | Value |
+|----|-----|
+| 🅰️ | `"a"` |
+| 🅱️ | `"b"` |
+| ©️ | `"c"` |
+| 🆔 | `"d"` |
+| 😦 | `"e"` |
+| 🔥 | `"f"` |
+| 🦍 | `"g"` |
+| ♓ | `"h"` |
+| ℹ️ | `"i"` |
+| 🎷 | `"j"` |
+| 🔑 | `"k"` |
+| 🛴 | `"l"` |
+| Ⓜ️ | `"m"` |
+| 🆖 | `"n"` |
+| 🅾️ | `"o"` |
+| 🅿️ | `"p"` |
+| 🔍 | `"q"` |
+| ®️ | `"r"` |
+| 💲 | `"s"` |
+| 👕 | `"t"` |
+| ⛎ | `"u"` |
+| 🚗 | `"v"` |
+| 〰️ | `"w"` |
+| 🐦 | `"x"` |
+| 🦞 | `"y"` |
+| 💤 | `"z"` |
+| ⚰ | `" "` |
+| ‼️ | `"!"` |
+| 👊 | `"."` |
+| 🗨️ | `""` |
+| 👇 | `"\n"` |
+| 0️⃣ | `0` |
+| 1️⃣ | `1` |
+| 2️⃣ | `2` |
+| 3️⃣ | `3` |
+| 4️⃣ | `4` |
+| 5️⃣ | `5` |
+| 6️⃣ | `6` |
+| 7️⃣ | `7` |
+| 8️⃣ | `8` |
+| 9️⃣ | `9` |
+| 🟢 | `True` |
+| 🔴 | `False` |
+| 🕳️ | `None` |
+
+### Types
+You can get the type white 🏷️.
+
+To convert beetween Types you can use :
+| Emoji | Type |
+|----|-------|
+| 🔤 | `str` |
+| 🔢 | `int` |
+| ⚖️ | `bool` |
+
+When two valur that have not the same type or are boolean or None type they are separate white a `, ` like :
+
+```python
+🪶🅰️1️⃣📦
+🪶🟢🔴📦
+🪶🕳️🕳️📦
+```
+Rendu : 
+`a 1`
+`True False`
+`None None`
+
+
+When two value that are str or int type they are link like :
+
+```python
+🪶🅰️🅱️📦
+🪶0️⃣1️⃣0️⃣📦
+```
+Rendu : 
+`ab`
+`10`
+
+You can use the ⛓️‍💥 to separate two value white a `, ` like :
+
+```python
+🪶🅰️⛓️‍💥🅱️📦
+🪶0️⃣⛓️‍💥1️⃣0️⃣📦
+```
+Rendu : 
+`a b`
+`0 10`
+
+
+#### List
+To creat a list use 🌜🌛.
+The liste have a variable size.
+You can have list in list.
+
+```python
+🪶🌜🅰️⛓️‍💥🅱️0️⃣⛓️‍💥1️⃣0️⃣🟢🔴🕳️🌜🌛🌛📦
+```
+Rendu : 
+`[a, b, 0, 10, True, False, None, []]`
+
+### Function
+| Emoji | Function | Description
+|----|-------|
+| 🪶 | `print` | same alse python
+| 🐷 | `upper` | same alse python
+| 🏷️ | `type` | same alse python
+| 🔢 | `int` | same alse python
+| 🔤 | `str` | same alse python
+| ⚖️ | `bool` | same alse python
+| 🧮 | `len` | same alse python
+| 📏 | `range` | same alse python
+| 🔽 | `min` | same alse python
+| 🔼 | `max` | same alse python
+| 🗂️ | `sorted` | same alse python
+| 🙅 | `not` | inverse the True and False
+| 🏁 | `end` | End the programe
+
+Use 📦 at the end of parametrers.
+You can use a function in a function like :
+    
+```python
+🪶🅰️🐷🅱️📦©️📦
+```
+Rendu : 
+`aBc`
+
+
+#### Creat Function
+
+### Operation
+
+### Variable
+
+

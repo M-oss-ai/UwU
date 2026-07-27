@@ -175,7 +175,7 @@ def get_emoji(line, look_at_chut=True):
     value = []
 
     for emoji in regex.findall(r"\X", line):
-        if emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "chut" and look_at_chut:
+        if look_at_chut and emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "chut":
             break
 
         if em.is_emoji(emoji):
@@ -292,3 +292,10 @@ with open('a.txt', 'r', encoding='utf-8') as fichier:
             translatiion.append(value)
                  
 read_lines(translatiion)
+
+
+
+
+
+
+
