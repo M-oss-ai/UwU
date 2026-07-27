@@ -154,7 +154,7 @@ Rendu :
 | 🔽 | `min` | same alse python
 | 🔼 | `max` | same alse python
 | 🗂️ | `sorted` | same alse python
-| 🙅 | `not` | inverse the True and False
+| 🙅 | `not` | inverse True and False
 | 🏁 | `end` | End the programe
 
 Use 📦 at the end of parametrers.
