@@ -168,13 +168,11 @@ table = {
     "🟥" : Operation("racine"),
     "🟰" : Operation("egale"),
     "🚫" : Operation("pas egale"),
-    "⬆️" : Operation("plus grand"),
-    "⬇️" : Operation("plus petit"),
+    "💪" : Operation("plus grand"),
+    "🤏" : Operation("plus petit"),
     "🤝" : Operation("and"),
     "🔀" : Operation("or")
 }
-
-# elif 😏
 
 # for 🌀 <new> <range or liste>
 # continue 

@@ -167,11 +167,66 @@ Rendu :
     
 `aBc`
 
+### Opperator
+➕➖➗🪵🪙✖️⚡🟥🟰🚫💪🤏🤝
+| Emoji | Python | Action |
+|----|-------|------|
+| ➕ | `+` | Addition |
+| ➖ | `-` | Substraction |
+| ➗ | `/` | Division |
+| 🪵 | `//` | Floor division |
+| 🪙 |  ˋ%` | Modulo |
+| ✖️ | `*` | Multiplication |
+| ⚡ | `**` | Exponentiation |
+| 🟥 | N/A | Square root |
+| 🟰 | `==` | Equality |
+| 🚫 | `!=` | Inequality |
+| 💪 | `>` | Greater than |
+| 🤏 | `<` | Less than |
+| 🤝 | `and` | Logical AND |
+| 🔀 | `or` | Logical OR |
 
-#### Creat Function
+To use opperator juste put them beetween two value Like : 
 
-### Operation
+```python
+🪶1️⃣➕2️⃣📦
+🪶🔴🤝🟢
+```
+Rendu : 
+
+`3`
+
+`False`
+
+ther is not priority of opperation in UwU Script all operations are doing for left to right : 
+
+```python
+🪶1️⃣➕2️⃣✖️3️⃣📦
+```
+Rendu : 
+
+`9`
+
+When beetween 🌜🌛 you have opperators and that give only one value it is not a list but just the value.
+White that you can change the priority of opperations
+
+```python
+🪶1️⃣➕🌜2️⃣✖️3️⃣🌛📦
+🪶🌜🌜1️⃣➕2️⃣🌛🌛📦
+🪶🌜1️⃣➕2️⃣🅰️🌛📦
+```
+Rendu : 
+
+`7`
+
+`[3]`
+
+`[3, a]`
 
 ### Variable
+
+
+
+
 
 
