@@ -210,7 +210,7 @@ Rendu :
 When beetween 🌜🌛 you have opperators and that give only one value it is not a list but just the value.
 White that you can change the priority of opperations
 
-```python
+```
 🪶1️⃣➕🌜2️⃣✖️3️⃣🌛📦
 🪶🌜🌜1️⃣➕2️⃣🌛🌛📦
 🪶🌜1️⃣➕2️⃣🅰️🌛📦
