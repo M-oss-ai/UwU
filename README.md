@@ -257,7 +257,6 @@ Rendu :
 
 
 ### If
-🤐🤔😌😏🫷
 In UwU Script the if is 🤔 and a boolean value have to follow direcly. The if continue un tile the next 🫷. All script beetween 🤔 and 🫷are only executed if 
 boolean is True.
 
@@ -295,7 +294,7 @@ Rendu :
 
 `Not Right`
 
-You can use 😏 to check if the boolean is false check if a second boolean is true and if the two boolean are false if a thurd boolean is true <etc.> Like :
+You can use 😏 to check if the boolean is false check if a second boolean is true and if the two boolean are false if a thurd boolean is true and so on Like :
     
 ```
 🤔🔴
