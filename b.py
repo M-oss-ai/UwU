@@ -174,6 +174,16 @@ table = {
     "🔀" : Operation("or")
 }
 
+# change 🔄 and 🎭
+
+# get text white aski code
+
+# get a function white text
+
+# import a module white text
+
+# integre float
+
 # for 🌀 <new> <range or liste>
 # continue 
 # break

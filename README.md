@@ -4,10 +4,7 @@ He is hevenly inspard from Python.
 
 
 ## Documentation
-🤐🅰️🅱️©️🆔😦🔥🦍♓ℹ️🎷🔑🛴Ⓜ️🆖🅾️🅿️🔍®️💲👕⛎🚗〰️🐦🦞💤⚰‼️👊👇0️⃣1️⃣2️⃣3️⃣4️⃣5️⃣6️⃣7️⃣8️⃣9️⃣🟢🔴🕳️
-🤐🪶🐷🏷️🔢🔤⚖️🧮📏🔽🔼🗂️🙅🏁
-🤐📦⛓️‍💥🌜🌛🤔😌😏🫷
-🤐➕➖➗🪵🪙✖️⚡🟥🟰🚫💪🤏🤝
+
 ### Comment
 Scripts that are not emojis are ignored.
 Space and Tabulations are not in sintaxe.
@@ -21,7 +18,7 @@ Lettres Ignored🤐 ❤️🌷Emoji Ignored🌷❤️
 To begin the tradition is to write a Hello Word in the console. 
 The function `print` is 🪶
 
-```python
+```
 🪶🐷♓📦😦🛴🛴🅾️⚰🐷〰️📦🅾️®️🛴🆔‼️📦
 ```
 Rendu : 
@@ -89,7 +86,7 @@ To convert beetween Types you can use :
 
 When two valur that have not the same type or are boolean or None type they are separate white a `, ` like :
 
-```python
+```
 🪶🅰️1️⃣📦
 🪶🟢🔴📦
 🪶🕳️🕳️📦
@@ -105,7 +102,7 @@ Rendu :
 
 When two value that are str or int type they are link like :
 
-```python
+```
 🪶🅰️🅱️📦
 🪶0️⃣1️⃣0️⃣📦
 ```
@@ -117,7 +114,7 @@ Rendu :
 
 You can use the ⛓️‍💥 to separate two value white a `, ` like :
 
-```python
+```
 🪶🅰️⛓️‍💥🅱️📦
 🪶0️⃣⛓️‍💥1️⃣0️⃣📦
 ```
@@ -133,7 +130,7 @@ To creat a list use 🌜🌛.
 The liste have a variable size.
 You can have list in list.
 
-```python
+```
 🪶🌜🅰️⛓️‍💥🅱️0️⃣⛓️‍💥1️⃣0️⃣🟢🔴🕳️🌜🌛🌛📦
 ```
 Rendu : 
@@ -160,7 +157,7 @@ Rendu :
 Use 📦 at the end of parametrers.
 You can use a function in a function like :
     
-```python
+```
 🪶🅰️🐷🅱️📦©️📦
 ```
 Rendu : 
@@ -188,7 +185,7 @@ Rendu :
 
 To use opperator juste put them beetween two value Like : 
 
-```python
+```
 🪶1️⃣➕2️⃣📦
 🪶🔴🤝🟢
 ```
@@ -200,7 +197,7 @@ Rendu :
 
 ther is not priority of opperation in UwU Script all operations are doing for left to right : 
 
-```python
+```
 🪶1️⃣➕2️⃣✖️3️⃣📦
 ```
 Rendu : 
@@ -211,7 +208,7 @@ When beetween 🌜🌛 you have opperators and that give only one value it is no
 White that you can change the priority of opperations
 
 ```
-🪶1️⃣➕🌜2️⃣✖️3️⃣🌛📦
+🪶🌜1️⃣➕🌜2️⃣✖️3️⃣🌛🌛📦
 🪶🌜🌜1️⃣➕2️⃣🌛🌛📦
 🪶🌜1️⃣➕2️⃣🅰️🌛📦
 ```
@@ -225,6 +222,63 @@ Rendu :
 
 ### Variable
 
+In UwU Script ther is not = assignement you juste put a not know emoji or variable at the begening form the ligne and take value next.
+
+
+```
+😀5️⃣0️⃣
+🪶😀📦
+
+😀1️⃣0️⃣
+🪶😀📦
+
+```
+Rendu : 
+
+`50`
+
+`10`
+
+You can assigne many variable in the same row Like :
+
+
+```
+😀😛5️⃣⛓️‍💥0️⃣
+🪶😀😛📦
+
+😀😇8️⃣⛓️‍💥3️⃣
+🪶😀😛😇📦
+
+```
+
+Rendu : 
+
+`5 0`
+
+`8 0 3`
+
+
+### If
+🤐🤔😌😏🫷
+In UwU Script the if is 🤔 and a boolean value have to follow direcly. The if continue un tile the next 🫷. All script beetween 🤔 and 🫷are only executed if 
+boolean is True.
+
+
+```
+😀8️⃣💪2️⃣
+🪶😀📦
+
+🤔😀
+🪶🐷®️📦ℹ️🦍♓👕📦
+🫷
+
+```
+
+Rendu : 
+
+`True`
+
+`Right`
 
 
 
