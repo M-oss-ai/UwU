@@ -185,7 +185,7 @@ def get_emoji(line, look_at_chut=True):
 
     #for emoji in regex.findall(r"\X", line):
     for emoji in grapheme.graphemes(line):
-        if emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "chut" and look_at_chut:
+        if look_at_chut and emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "chut":
             break
 
         if em.is_emoji(emoji):
@@ -299,5 +299,4 @@ def reading_code():
     return translation
 
 translation = reading_code()
-print(translation)
 read_lines(translation)

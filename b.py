@@ -4,6 +4,13 @@ def upper(text):
     return text.upper()
 
 def get_type(value):
+    if type(value) == Variable:
+        return type(value.value)
+        
+    elif type(value) in (Instructions, Operation):
+        print("error7")
+        sys.exit(1)
+    
     return type(value)
 
 def convert_to_str(value):
@@ -119,14 +126,15 @@ table = {
     "💤" : "z",
     "⚰" : " ",
     "‼️" : "!",
+    "👊" : ".",
     "🗨️" : "",
     "👇" : "\n",
-    "0️⃣" : 0,✊🤜🤛
-    "☝" : 1,
-    "🤘" : 2,
-    "🤟" : 3,
-    "🍀" : 4,
-    "🤚" : 5,
+    "0️⃣" : 0,
+    "1️⃣" : 1,
+    "2️⃣" : 2,
+    "3️⃣" : 3,
+    "4️⃣" : 4,
+    "5️⃣" : 5,
     "6️⃣" : 6,
     "7️⃣" : 7,
     "8️⃣" : 8,
@@ -152,8 +160,8 @@ table = {
     "🤐" : Instructions("chut"),
     "📦" : Instructions("end paramettres"),
     "⛓️‍💥" : Instructions("deconnecter"),
-    "👉" : Instructions("start liste"),
-    "👈" : Instructions("end liste"),
+    "🌜" : Instructions("start liste"),
+    "🌛" : Instructions("end liste"),
     "🔄" : Instructions("remplace"),
     "🎭" : Instructions("naturalise"),
     "🤔" : Instructions("if"),
@@ -170,8 +178,8 @@ table = {
     "🟥" : Operation("racine"),
     "🟰" : Operation("egale"),
     "🚫" : Operation("pas egale"),
-    "⬆️" : Operation("plus grand"),
-    "⬇️" : Operation("plus petit"),
+    "💪" : Operation("plus grand"),
+    "🤏" : Operation("plus petit"),
     "🤝" : Operation("and"),
     "🔀" : Operation("or") ,
     "📥" : Operation("in"),
@@ -202,4 +210,3 @@ table = {
 # créé une fonction 🌏 <new> 👉 <new> <new> <new> 👈
 # return 🙏
 # end : next 🫷🔃
-
