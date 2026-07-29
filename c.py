@@ -183,7 +183,6 @@ def get_emoji(line, look_at_chut=True):
     value = []
 
     #for emoji in regex.findall(r"\X", line):
-    regex
         if emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "chut" and look_at_chut:
             break
 

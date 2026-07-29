@@ -84,6 +84,10 @@ class Operation():
             case "not in":
                 def calcule(beafor, after):
                     return beafor not in after
+            case ".":
+                def calcule(beafor, after):
+                    
+                    return float(str(int(beafor)) + "." + str(int(beafor)))
         self.calcule = calcule
     
 table = {
@@ -171,8 +175,19 @@ table = {
     "🤝" : Operation("and"),
     "🔀" : Operation("or") ,
     "📥" : Operation("in"),
-    "📤" : Operation("not in")
+    "📤" : Operation("not in"),
+    "⚪️" : Operation(".")
 }
+
+# change 🔄 and 🎭
+
+# get text white aski code
+
+# get a function white text
+
+# import a module white text
+
+# integre float
 
 # for 🌀 <new> <range or liste>
 # continue 
@@ -186,4 +201,5 @@ table = {
 
 # créé une fonction 🌏 <new> 👉 <new> <new> <new> 👈
 # return 🙏
-# end : next 🫷
+# end : next 🫷🔃
+
