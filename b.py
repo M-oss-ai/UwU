@@ -85,10 +85,10 @@ class Operation():
                 def calcule(beafor, after):
                     return beafor not in after
             case ".":
-                def calcule(beafor, after):
-                    
-                    return float(str(int(beafor)) + "." + str(int(beafor)))
+                calcule = ""
+                
         self.calcule = calcule
+        
     
 table = {
     "🅰️" : "a",
@@ -121,7 +121,7 @@ table = {
     "‼️" : "!",
     "🗨️" : "",
     "👇" : "\n",
-    "✊" : 0,
+    "0️⃣" : 0,✊🤜🤛
     "☝" : 1,
     "🤘" : 2,
     "🤟" : 3,

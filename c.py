@@ -110,6 +110,7 @@ def do_function(emoji, ligne):
     return (func(*parametres), skip)
 
 def do_opperation(liste):
+    print(liste)
     if len(liste) <= 1:
         return liste
     
@@ -183,6 +184,7 @@ def get_emoji(line, look_at_chut=True):
     value = []
 
     #for emoji in regex.findall(r"\X", line):
+    for emoji in grapheme.graphemes(line):
         if emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "chut" and look_at_chut:
             break
 
@@ -297,4 +299,5 @@ def reading_code():
     return translation
 
 translation = reading_code()
+print(translation)
 read_lines(translation)
