@@ -231,7 +231,6 @@ In UwU Script ther is not = assignement you juste put a not know emoji or variab
 
 😀1️⃣0️⃣
 🪶😀📦
-
 ```
 Rendu : 
 
@@ -248,7 +247,6 @@ You can assigne many variable in the same row Like :
 
 😀😇8️⃣⛓️‍💥3️⃣
 🪶😀😛😇📦
-
 ```
 
 Rendu : 
@@ -271,16 +269,64 @@ boolean is True.
 🤔😀
 🪶🐷®️📦ℹ️🦍♓👕📦
 🫷
-
 ```
-
 Rendu : 
 
 `True`
 
 `Right`
 
+To do aniting if the boolean is false you can use 😌 just don't use 🫷 befor 😌 Like : 
 
+```
+😀8️⃣🤏2️⃣
+🪶😀📦
 
+🤔😀
+🪶🐷®️📦ℹ️🦍♓👕📦
+
+😌
+🪶🐷🆖📦🅾️👕 ⚰ 🐷®️📦ℹ️🦍♓👕📦
+🫷
+```
+Rendu : 
+
+`False`
+
+`Not Right`
+
+You can use 😏 to check if the boolean is false check if a second boolean is true and if the two boolean are false if a thurd boolean is true <etc.> Like :
+    
+```
+🤔🔴
+🪶1️⃣⛓️‍💥🐷®️📦ℹ️🦍♓👕📦
+
+😏🔴
+🪶2️⃣⛓️‍💥🐷®️📦ℹ️🦍♓👕📦
+
+😏🟢
+🪶3️⃣⛓️‍💥🐷®️📦ℹ️🦍♓👕📦
+
+😌
+🪶🐷🅰️📦🛴🛴 ⚰ 🐷🆖📦🅾️👕 ⚰ 🐷®️📦ℹ️🦍♓👕📦
+🫷
+```
+Rendu : 
+
+`3 Right`
+
+You can olso don't use 😌 white 😏 Like : 
+
+```
+🤔🔴
+🪶1️⃣⛓️‍💥🐷®️📦ℹ️🦍♓👕📦
+
+😏🟢
+🪶2️⃣⛓️‍💥🐷®️📦ℹ️🦍♓👕📦
+🫷
+```
+Rendu : 
+
+`2 Right`
 
 

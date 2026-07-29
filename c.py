@@ -132,7 +132,7 @@ def do_opperation(liste):
     return liste
 
 def creat_variable(emoji, ligne):
-    value = get_liste(ligne)[0][0]  
+    value = get_liste(ligne)[0]
     table[emoji] = Variable(value)
     
 def naturalise(ligne):
