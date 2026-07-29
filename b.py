@@ -84,8 +84,18 @@ class Operation():
                     return beafor and after
             case "or":
                 def calcule(beafor, after):
-                    return beafor or after
+                    return beafor or after 
+            case "in":
+                def calcule(beafor, after):
+                    return beafor in after 
+            case "not in":
+                def calcule(beafor, after):
+                    return beafor not in after
+            case ".":
+                calcule = ""
+                
         self.calcule = calcule
+        
     
 table = {
     "🅰️" : "a",
@@ -105,7 +115,7 @@ table = {
     "🅾️" : "o",
     "🅿️" : "p",
     "🔍" : "q",
-    "®️" : "r",
+    "®" : "r",
     "💲" : "s",
     "👕" : "t",
     "⛎" : "u",
@@ -155,8 +165,8 @@ table = {
     "🔄" : Instructions("remplace"),
     "🎭" : Instructions("naturalise"),
     "🤔" : Instructions("if"),
-    "😌" : Instructions("else"),
     "😏" : Instructions("elif"),
+    "😌" : Instructions("else"),
     "🫷" : Instructions("end"),
     "➕" : Operation("plus"),
     "➖" : Operation("moin"),
@@ -171,7 +181,10 @@ table = {
     "💪" : Operation("plus grand"),
     "🤏" : Operation("plus petit"),
     "🤝" : Operation("and"),
-    "🔀" : Operation("or")
+    "🔀" : Operation("or") ,
+    "📥" : Operation("in"),
+    "📤" : Operation("not in"),
+    "⚪️" : Operation(".")
 }
 
 # change 🔄 and 🎭

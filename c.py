@@ -1,4 +1,4 @@
-#import regex
+# import regex
 import grapheme
 import emoji as em
 import sys
@@ -9,7 +9,6 @@ INSTRUCTION_WANT_END = ["if", "for", "while"]
 
 def infos(func):
     sig = inspect.signature(func)
-
     mini = 0
     maxi = 0
 
@@ -111,6 +110,7 @@ def do_function(emoji, ligne):
     return (func(*parametres), skip)
 
 def do_opperation(liste):
+    print(liste)
     if len(liste) <= 1:
         return liste
     
@@ -131,10 +131,18 @@ def do_opperation(liste):
     
     return liste
 
-def creat_variable(emoji, ligne):
-    value = get_liste(ligne)[0]
-    table[emoji] = Variable(value)
+def creat_variable(ligne):
+    nombre = 0
+    while len(ligne) > nombre and (ligne[nombre] not in table.keys() or type(table[ligne[nombre]]) == Variable):
+        nombre += 1
     
+    resultat = get_liste(ligne[nombre:])[0]
+    nombre = min(len(resultat), nombre)
+
+    for position in range(nombre):
+        value = resultat[position]
+        table[ligne[position]] = Variable(value)
+
 def naturalise(ligne):
     if len(ligne) < 1:
         print("error4")
@@ -221,8 +229,7 @@ def get_end(fichier):
     sys.exit(1)
 
 def instruction_if(fichier):
-
-    if get_liste(fichier[0][1:])[0][0]:
+    if get_liste(fichier[0][1:])[0]:
         resultat = read_lines(fichier[1:], end_wanted=["end", "else", "elif"])
         nombre = resultat[0]
 
@@ -275,29 +282,21 @@ def read_lines(fichier, end_wanted=[]):
                     print(" 🚫 " + fichier[ligne][0] + " 🫵 🖕 ")
                     sys.exit(1)
 
-        elif len(fichier[ligne]) == 1:
-            print("error1")
-            sys.exit(1)
-
         else:
-            creat_variable(fichier[ligne][0], fichier[ligne][1:])
+            creat_variable(fichier[ligne])
 
     sys.exit(1)
 
+def reading_code():
+    with open('a.txt', 'r', encoding='utf-8') as fichier:
+        translation = []
 
-with open('a.txt', 'r', encoding='utf-8') as fichier:
-    translatiion = []
+        for line in fichier:
+            value = get_emoji(line)
+            if value != []:
+                translation.append(value)
 
-    for line in fichier:
-        value = get_emoji(line)
-        if value != []:
-            translatiion.append(value)
-                 
-read_lines(translatiion)
+    return translation
 
-
-
-
-
-
-
+translation = reading_code()
+read_lines(translation)
