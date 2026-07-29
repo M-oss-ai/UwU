@@ -77,8 +77,18 @@ class Operation():
                     return beafor and after
             case "or":
                 def calcule(beafor, after):
-                    return beafor or after
+                    return beafor or after 
+            case "in":
+                def calcule(beafor, after):
+                    return beafor in after 
+            case "not in":
+                def calcule(beafor, after):
+                    return beafor not in after
+            case ".":
+                calcule = ""
+                
         self.calcule = calcule
+        
     
 table = {
     "🅰️" : "a",
@@ -98,7 +108,7 @@ table = {
     "🅾️" : "o",
     "🅿️" : "p",
     "🔍" : "q",
-    "®️" : "r",
+    "®" : "r",
     "💲" : "s",
     "👕" : "t",
     "⛎" : "u",
@@ -111,7 +121,7 @@ table = {
     "‼️" : "!",
     "🗨️" : "",
     "👇" : "\n",
-    "✊" : 0,
+    "0️⃣" : 0,✊🤜🤛
     "☝" : 1,
     "🤘" : 2,
     "🤟" : 3,
@@ -147,8 +157,8 @@ table = {
     "🔄" : Instructions("remplace"),
     "🎭" : Instructions("naturalise"),
     "🤔" : Instructions("if"),
-    "😌" : Instructions("else"),
     "😏" : Instructions("elif"),
+    "😌" : Instructions("else"),
     "🫷" : Instructions("end"),
     "➕" : Operation("plus"),
     "➖" : Operation("moin"),
@@ -163,10 +173,21 @@ table = {
     "⬆️" : Operation("plus grand"),
     "⬇️" : Operation("plus petit"),
     "🤝" : Operation("and"),
-    "🔀" : Operation("or")
+    "🔀" : Operation("or") ,
+    "📥" : Operation("in"),
+    "📤" : Operation("not in"),
+    "⚪️" : Operation(".")
 }
 
-# elif 😏
+# change 🔄 and 🎭
+
+# get text white aski code
+
+# get a function white text
+
+# import a module white text
+
+# integre float
 
 # for 🌀 <new> <range or liste>
 # continue 
@@ -180,5 +201,5 @@ table = {
 
 # créé une fonction 🌏 <new> 👉 <new> <new> <new> 👈
 # return 🙏
-# end : next 🫷
+# end : next 🫷🔃
 
