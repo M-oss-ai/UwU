@@ -153,12 +153,12 @@ def naturalise(ligne):
     
             if len(ligne) > place and ligne[place + 1] in table.keys() and type(table[ligne[place + 1]]) == Instructions and table[ligne[place + 1]].name == "end paramettres":
                 value += emoji
-                return (value, place + 2)
+                return (value, place + 3)
                 
             elif place == 0:
                 value += emoji
                 
-            return (value, place + 1)
+            return (value, place + 2)
             
         value += emoji
     
