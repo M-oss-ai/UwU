@@ -1,4 +1,3 @@
-# import regex
 import grapheme
 import emoji as em
 import sys
@@ -23,8 +22,8 @@ def infos(func):
 
     return mini, maxi
 
-
 def get_liste(liste, end_wanted=[]):
+    Exception("error")
     final_liste = []
     skip = 0
     separer = False
@@ -32,7 +31,7 @@ def get_liste(liste, end_wanted=[]):
         if place >= skip:
             emoji = liste[place]
             if not emoji in table.keys():
-                print(" 🚫 ❌ "+ emoji +" 🫵 🖕 ")
+                print(" 🚫 ❌ " + emoji + " 🫵 🖕 ")
                 sys.exit(1)
 
             value = table[emoji]
@@ -50,6 +49,10 @@ def get_liste(liste, end_wanted=[]):
                     
                     case "input":
                         resultats = get_input(liste[place + 1:])
+                        value = resultats[0]
+                        skip = place + resultats[1]
+                    case "naturalise":
+                        resultats = naturalise(liste[place + 1:])
                         value = resultats[0]
                         skip = place + resultats[1]
                     
@@ -110,7 +113,6 @@ def do_function(emoji, ligne):
     return (func(*parametres), skip)
 
 def do_opperation(liste):
-    print(liste)
     if len(liste) <= 1:
         return liste
     
@@ -144,29 +146,24 @@ def creat_variable(ligne):
         table[ligne[position]] = Variable(value)
 
 def naturalise(ligne):
-    if len(ligne) < 1:
-        print("error4")
-        sys.exit(1)
-        
-    for emoji in ligne:
-        table[emoji] = emoji
-
-def remplace(ligne):
-    if len(ligne) < 2:
-        print("error3")
-        sys.exit(1)
-
-    match ligne[0] in table.keys(), ligne[1] in table.keys():
-        case False, False:
-            print("error2")
-        case True, False:
-            table[ligne[1]] = table[ligne[0]]
-            del table[ligne[0]]
-        case False, True:
-            table[ligne[0]] = table[ligne[1]]
-            del table[ligne[1]]
-        case True, True:
-            table[ligne[0]], table[ligne[1]] = table[ligne[1]], table[ligne[0]]
+    value = ""
+    for place in range(len(ligne)):
+        emoji = ligne[place]
+        if emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "end paramettres":
+    
+            if len(ligne) > place and ligne[place + 1] in table.keys() and type(table[ligne[place + 1]]) == Instructions and table[ligne[place + 1]].name == "end paramettres":
+                value += emoji
+                return (value, place + 3)
+                
+            elif place == 0:
+                value += emoji
+                
+            return (value, place + 2)
+            
+        value += emoji
+    
+    return (value, len(ligne) + 1)
+    
 
 def get_input(ligne):
     parametres = get_liste(ligne, end_wanted=["end paramettres"])
@@ -183,7 +180,6 @@ def get_input(ligne):
 def get_emoji(line, look_at_chut=True):
     value = []
 
-    #for emoji in regex.findall(r"\X", line):
     for emoji in grapheme.graphemes(line):
         if look_at_chut and emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "chut":
             break
@@ -194,15 +190,10 @@ def get_emoji(line, look_at_chut=True):
     return value
 
 def get_end(fichier):
-    # print("\n", fichier, "\n")
     liste_of_instruction = []
-    # pour toutes les lignes
     for ligne in range(len(fichier)):
-        # si c'est une instruction
         if fichier[ligne][0] in table.keys() and type(table[fichier[ligne][0]]) == Instructions:
             value = table[fichier[ligne][0]].name
-            # print(liste_of_instruction, value)
-
 
             if value in INSTRUCTION_WANT_END:
                 liste_of_instruction.append(value)
@@ -236,7 +227,6 @@ def instruction_if(fichier):
         while resultat[1] != "end":
             resultat = get_end(fichier[nombre + 1:])
             nombre += resultat[0] - 1
-            # print(nombre)
 
         return nombre + 2
     
@@ -264,8 +254,6 @@ def read_lines(fichier, end_wanted=[]):
                 
                 case Instructions():
                     match value.name:
-                        case "remplace":
-                            remplace(fichier[ligne][1:])
                         case "naturalise":
                             naturalise(fichier[ligne][1:])
                         case "input":

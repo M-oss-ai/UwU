@@ -39,6 +39,12 @@ class Variable():
     def __init__(self, value):
         self.value = value
 
+class Function_Emoji():
+    def __init__(self, value):
+        match value:
+            case "neutralise":
+                self.function = neutralise
+
 class Operation():
     def __init__(self, value):
     
@@ -115,7 +121,7 @@ table = {
     "🅾️" : "o",
     "🅿️" : "p",
     "🔍" : "q",
-    "®" : "r",
+    "®️" : "r",
     "💲" : "s",
     "👕" : "t",
     "⛎" : "u",
@@ -162,7 +168,6 @@ table = {
     "⛓️‍💥" : Instructions("deconnecter"),
     "🌜" : Instructions("start liste"),
     "🌛" : Instructions("end liste"),
-    "🔄" : Instructions("remplace"),
     "🎭" : Instructions("naturalise"),
     "🤔" : Instructions("if"),
     "😏" : Instructions("elif"),
@@ -187,7 +192,7 @@ table = {
     "⚪️" : Operation(".")
 }
 
-# change 🔄 and 🎭
+# change 🎭
 
 # get text white aski code
 
@@ -196,6 +201,8 @@ table = {
 # import a module white text
 
 # integre float
+
+# functilons for liste
 
 # for 🌀 <new> <range or liste>
 # continue 
