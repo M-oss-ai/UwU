@@ -1,4 +1,8 @@
 import sys
+import builtins
+from importlib import import_module
+
+NOM_FICHIER_PY = ["b", "c"]
 
 def upper(text):
     return text.upper()
@@ -25,6 +29,21 @@ def convert_to_bool(value):
 def creat_range(*arry): 
     return range(*arry)
 
+def find(*arry):
+    if len(arry) == 1:
+        return getattr(builtins, arry[0])
+    
+    elif len(arry) == 2 and type(arry[1]) == str and arry[1] not in NOM_FICHIER_PY:
+        return getattr(import_module(arry[1]), arry[0])()
+    
+    elif len(arry) == 2 and type(arry[1]) == list:
+        return getattr(builtins, arry[0])(*arry[1])
+    
+    elif len(arry) >= 3 and arry[1] not in NOM_FICHIER_PY:
+        return getattr(import_module(arry[1]), arry[0])(*arry[2])
+    
+    raise Exception("error8")
+
 def function_not(value):
     return not value
 
@@ -38,12 +57,6 @@ class Instructions():
 class Variable():
     def __init__(self, value):
         self.value = value
-
-class Function_Emoji():
-    def __init__(self, value):
-        match value:
-            case "neutralise":
-                self.function = neutralise
 
 class Operation():
     def __init__(self, value):
@@ -162,6 +175,8 @@ table = {
     "🗂️" : sorted,
     "🙅" : function_not,
     "🏁" : fin,
+    "🔣" : chr,
+    "🔎" : find,
     "❓" : Instructions("input"),
     "🤐" : Instructions("chut"),
     "📦" : Instructions("end paramettres"),
@@ -192,17 +207,14 @@ table = {
     "⚪️" : Operation(".")
 }
 
-# change 🎭
-
-# get text white aski code
-
-# get a function white text
-
-# import a module white text
-
-# integre float
-
 # functilons for liste
+    # sunm
+    # list (pas le type mais la fonction)
+    # liste.append
+    # liste.extend
+    # liste.remove
+    # liste.copy
+    # liste.pop
 
 # for 🌀 <new> <range or liste>
 # continue 
