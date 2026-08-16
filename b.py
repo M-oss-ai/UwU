@@ -4,31 +4,6 @@ from importlib import import_module
 
 NOM_FICHIER_PY = ["b", "c"]
 
-def upper(text):
-    return text.upper()
-
-def get_type(value):
-    if type(value) == Variable:
-        return type(value.value)
-        
-    elif type(value) in (Instructions, Operation):
-        print("error7")
-        sys.exit(1)
-    
-    return type(value)
-
-def convert_to_str(value):
-    return str(value)
-
-def convert_to_int(value):
-    return int(value)
-
-def convert_to_bool(value):
-    return bool(value)
-
-def creat_range(*arry): 
-    return range(*arry)
-
 def find(*arry):
     if len(arry) == 1:
         return getattr(builtins, arry[0])
@@ -40,6 +15,8 @@ def find(*arry):
         return getattr(builtins, arry[0])(*arry[1])
     
     elif len(arry) >= 3 and arry[1] not in NOM_FICHIER_PY:
+        if type(arry[2]) != list:
+            return getattr(import_module(arry[1]), arry[0])(arry[2])
         return getattr(import_module(arry[1]), arry[0])(*arry[2])
     
     raise Exception("error8")
@@ -124,7 +101,7 @@ table = {
     "😦" : "e",
     "🔥" : "f",
     "🦍" : "g",
-    "♓" : "h",
+    "♓️" : "h",
     "ℹ️" : "i",
     "🎷" : "j",
     "🔑" : "k",
@@ -136,18 +113,15 @@ table = {
     "🔍" : "q",
     "®️" : "r",
     "💲" : "s",
-    "👕" : "t",
+    "™️" : "t",
     "⛎" : "u",
-    "🚗" : "v",
+    "♈️" : "v",
     "〰️" : "w",
-    "🐦" : "x",
+    "❌" : "x",
     "🦞" : "y",
     "💤" : "z",
-    "⚰" : " ",
-    "‼️" : "!",
-    "👊" : ".",
+    "⚰️" : " ",
     "🗨️" : "",
-    "👇" : "\n",
     "0️⃣" : 0,
     "1️⃣" : 1,
     "2️⃣" : 2,
@@ -162,22 +136,28 @@ table = {
     "🔴" : False,
     "🕳️" : None,
     "🪶" : print,
-    "🐷" : upper,
-    "🏷️" : get_type,
-    "🔢" : convert_to_int,
-    "🔤" : convert_to_str,
-    "🔤" : convert_to_str,
-    "⚖️" : convert_to_bool,
+    "🐷" : str.upper,
+    "🏷️" : type,
+    "🔢" : int,
+    "🔤" : str,
+    "⚖️" : bool,
+    "📋" : list,
     "🧮" : len,
-    "📏" : creat_range,
+    "📏" : range,
     "🔽" : min,
     "🔼" : max,
+    "🗃️" : sum,
     "🗂️" : sorted,
     "🙅" : function_not,
     "🏁" : fin,
     "🔣" : chr,
     "🔎" : find,
-    "❓" : Instructions("input"),
+    "🪞" : list.copy,
+    "📨" : list.append,
+    "🎞️" : list.extend,
+    "🗑️" : list.remove,
+    "🍿" : list.pop,
+    "❓" : input,
     "🤐" : Instructions("chut"),
     "📦" : Instructions("end paramettres"),
     "⛓️‍💥" : Instructions("deconnecter"),
@@ -187,14 +167,14 @@ table = {
     "🤔" : Instructions("if"),
     "😏" : Instructions("elif"),
     "😌" : Instructions("else"),
-    "🫷" : Instructions("end"),
+    "🔚" : Instructions("end"),
     "➕" : Operation("plus"),
     "➖" : Operation("moin"),
     "➗" : Operation("divisé"),
     "🪵" : Operation("division entière"),
     "🪙" : Operation("modulo"),
-    "✖️" : Operation("fois"),
-    "⚡" : Operation("puissance"),
+    "✳️" : Operation("fois"),
+    "⚡️" : Operation("puissance"),
     "🟥" : Operation("racine"),
     "🟰" : Operation("egale"),
     "🚫" : Operation("pas egale"),
@@ -207,18 +187,15 @@ table = {
     "⚪️" : Operation(".")
 }
 
-# functilons for liste
-    # sunm
-    # list (pas le type mais la fonction)
-    # liste.append
-    # liste.extend
-    # liste.remove
-    # liste.copy
-    # liste.pop
+# random
+
+# fonction d'objet
+
+# caracteres spesiaux
 
 # for 🌀 <new> <range or liste>
 # continue 
-# break
+# break 
 # end : next 🫷
 
 # while 🤗 <booleant>
