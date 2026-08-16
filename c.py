@@ -67,7 +67,7 @@ def get_liste(liste, end_wanted=[]):
             elif type(value) == Variable:
                 value = value.value
             
-            elif type(value) in (types.FunctionType,  types.BuiltinFunctionType):
+            elif callable(value):
                 resultats = do_function(emoji, liste[place + 1:])
                 value = resultats[0]
                 skip = place + resultats[1]
@@ -92,13 +92,15 @@ def get_liste(liste, end_wanted=[]):
     return (do_opperation(final_liste), len(liste) + 1)
 
 def do_function(emoji, ligne):
+    
     func = table[emoji]
     parametres, skip = get_liste(ligne, end_wanted=["end paramettres"])
+    
     try:
         parms_possible = infos(func)
     except:
         parms_possible = (0, float("inf"))
-
+    
     if type(parametres) != list:
         parametres = [parametres]
 
@@ -113,22 +115,29 @@ def do_function(emoji, ligne):
     return (func(*parametres), skip)
 
 def do_opperation(liste):
-    if len(liste) <= 1:
-        return liste
+    
     
     skip = 0
     for place in range(len(liste)):
+        hase_do_opreation = False
         place -= skip
 
         if place >= len(liste):
             break
 
         if type(liste[place]) == Operation:
+            if place == 0:
+                print("error7")
+                sys.exit(1)
+            elif place + 1 >= len(liste):
+                print("error8")
+                sys.exit(1)
+            hase_do_opreation = True
             value = liste[place].calcule(liste[place - 1], liste[place + 1])
             liste[place - 1 : place + 2] = [value]
             skip += 1
     
-    if len(liste) == 1:
+    if len(liste) == 1 and hase_do_opreation:
         return liste[0]
     
     return liste
@@ -183,8 +192,9 @@ def get_emoji(line, look_at_chut=True):
     for emoji in grapheme.graphemes(line):
         if look_at_chut and emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "chut":
             break
+        
+        if em.is_emoji(emoji) or emoji in table.keys():
 
-        if em.is_emoji(emoji):
             value.append(emoji)
 
     return value
@@ -220,7 +230,8 @@ def get_end(fichier):
     sys.exit(1)
 
 def instruction_if(fichier):
-    if get_liste(fichier[0][1:])[0]:
+    
+    if get_liste(fichier[0][1:])[0][0]:
         resultat = read_lines(fichier[1:], end_wanted=["end", "else", "elif"])
         nombre = resultat[0]
 
@@ -248,27 +259,27 @@ def read_lines(fichier, end_wanted=[]):
 
         if fichier[ligne][0] in table.keys() and type(table[fichier[ligne][0]]) != Variable:
             value = table[fichier[ligne][0]]
-            match value:
-                case types.BuiltinFunctionType() | types.FunctionType():
-                    do_function(fichier[ligne][0], fichier[ligne][1:])
+            
+            if callable(value):
+                do_function(fichier[ligne][0], fichier[ligne][1:])
                 
-                case Instructions():
-                    match value.name:
-                        case "naturalise":
-                            naturalise(fichier[ligne][1:])
-                        case "input":
-                            get_input(fichier[ligne][1:])
-                        case "if":
-                            skip = ligne + instruction_if(fichier[ligne:])
-                        case  x if x in end_wanted:
-                            return (ligne, x)
-                        case _:
-                            print("error5")
-                            sys.exit(1)
+            elif type(value) == Instructions:
+                match value.name:
+                    case "naturalise":
+                        naturalise(fichier[ligne][1:])
+                    case "input":
+                        get_input(fichier[ligne][1:])
+                    case "if":
+                        skip = ligne + instruction_if(fichier[ligne:])
+                    case  x if x in end_wanted:
+                        return (ligne, x)
+                    case _:
+                        print("error5")
+                        sys.exit(1)
 
-                case _:
-                    print(" 🚫 " + fichier[ligne][0] + " 🫵 🖕 ")
-                    sys.exit(1)
+            else:
+                print(" 🚫 " + fichier[ligne][0] + " 🫵 🖕 ")
+                sys.exit(1)
 
         else:
             creat_variable(fichier[ligne])
@@ -286,5 +297,7 @@ def reading_code():
 
     return translation
 
-translation = reading_code()
-read_lines(translation)
+read_lines(reading_code())
+
+
+
