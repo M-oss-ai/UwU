@@ -106,6 +106,7 @@ def do_function(emoji, ligne):
 
     if len(parametres) < parms_possible[0]:
         print(" 🚫 🤷 " + emoji + " 🤷 📦 🫵 🖕 ")
+        print(parametres)
         sys.exit(1)
     
     elif len(parametres) > parms_possible[1]:
