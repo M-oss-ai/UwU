@@ -111,15 +111,14 @@ def do_function(emoji, ligne):
     elif len(parametres) > parms_possible[1]:
         print(" 🚫 🤯 " + emoji + " 🤯 🫵 🖕 ")
         sys.exit(1)
-
+        
     return (func(*parametres), skip)
 
 def do_opperation(liste):
     
-    
     skip = 0
+    hase_do_opreation = False
     for place in range(len(liste)):
-        hase_do_opreation = False
         place -= skip
 
         if place >= len(liste):
@@ -133,10 +132,11 @@ def do_opperation(liste):
                 print("error8")
                 sys.exit(1)
             hase_do_opreation = True
+            
             value = liste[place].calcule(liste[place - 1], liste[place + 1])
+            
             liste[place - 1 : place + 2] = [value]
             skip += 1
-    
     if len(liste) == 1 and hase_do_opreation:
         return liste[0]
     
