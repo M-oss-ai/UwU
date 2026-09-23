@@ -3,12 +3,12 @@
 UwU Script is a programming language that uses **only** emojis as syntax.
 It is heavily inspired by Python.
 
-> **Note on this document.** This file corrects the original `README.md`:
-> it fixes spelling/grammar issues and, more importantly, re-aligns every
-> emoji reference with what is actually implemented in `b.py` / `c.py`.
-> The original documentation had drifted out of sync with the interpreter
-> (e.g. it referenced emojis for `e`, `f`, `g`, `t`, `v`, `x`, `y`, `!`,
-> `\n`, `upper` and "end if" that no longer exist in the code).
+> **Note on this document.** This file corrects the original `README.md`
+> and is kept in sync with the actual interpreter (`b.py` / `c.py`).
+> Every example below was run against the current code, not just
+> hand-derived — including the parts covering `🤙` (function references)
+> and the punctuation/random/attribute-access additions merged from
+> `main`.
 
 ## Documentation
 
@@ -27,10 +27,11 @@ Letters are ignored 😶 ❤️🌷 these emojis are ignored too 🌷❤️
 
 ### Hello World
 The traditional first program is to print "Hello world!" to the console.
-The `print` function is 🪶.
+The `print` function is 🪶. As explained in "Functions" below, a function
+emoji only runs when 🤙 follows it directly.
 
 ```
-🪶♓🔱🛴🛴🅾️⚰️〰️🅾️®️🛴🆔📦
+🪶🤙♓🔱🛴🛴🅾️⚰️〰️🅾️®️🛴🆔📦
 ```
 Result:
 
@@ -85,7 +86,27 @@ Result:
 | 🔴 | `False` |
 | 🕳️ | `None` |
 
-There is currently no emoji mapped to `"."` (period) in the interpreter.
+Punctuation and other special characters:
+
+| Emoji | Value | Emoji | Value |
+|----|-----|----|-----|
+| 📞 | `"\"` | 🌘 | `"("` |
+| 🚥 | `"-"` | 🌒 | `")"` |
+| ✴️ | `"*"` | 🫳 | `"~"` |
+| 🔘 | `"•"` | ✨ | `"+"` |
+| 💵 | `"$"` | 🫐 | `":"` |
+| 💶 | `"€"` | 🏒 | `";"` |
+| ❤️ | `"♥"` | ⤴️ | `","` |
+| 🦯 | `"/"` | 🍺 | `"'"` |
+| 💴 | `"¥"` | 🍻 | `"\""` |
+| 💷 | `"£"` | 📎 | `"&"` |
+| 🥿 | `"_"` | 🎓 | `"^"` |
+| ⚫️ | `"."` | 🐌 | `"@"` |
+| 🚦 | `"\|"` | 💯 | `"%"` |
+| #️⃣ | `"#"` | 👉 | `"{"` |
+| ▶️ | `">"` | 👈 | `"}"` |
+| ◀️ | `"<"` | 🫸 | `"["` |
+| 🥓 | `"="` | 🫷 | `"]"` |
 
 ### Types
 You can get the type of a value with 🏷️.
@@ -100,12 +121,13 @@ To convert between types, use:
 | 📋 | `list` |
 
 When two consecutive values do not have the same type, or are `bool`/`None`,
-they stay separate (joined with `", "` when printed together):
+they stay separate and are printed with a single space between them
+(Python's `print` default separator):
 
 ```
-🪶🅰️1️⃣📦
-🪶🟢🔴📦
-🪶🕳️🕳️📦
+🪶🤙🅰️1️⃣📦
+🪶🤙🟢🔴📦
+🪶🤙🕳️🕳️📦
 ```
 Result:
 
@@ -118,8 +140,8 @@ Result:
 When two consecutive values are both `str` or both `int`, they are merged:
 
 ```
-🪶🅰️🅱️📦
-🪶0️⃣1️⃣0️⃣📦
+🪶🤙🅰️🅱️📦
+🪶🤙0️⃣1️⃣0️⃣📦
 ```
 Result:
 
@@ -127,11 +149,12 @@ Result:
 
 `10`
 
-You can use ⛓️‍💥 to force two values to stay separate (joined with `", "`):
+You can use ⛓️‍💥 to force two values to stay separate (they are still
+printed with a single space between them):
 
 ```
-🪶🅰️⛓️‍💥🅱️📦
-🪶0️⃣⛓️‍💥1️⃣0️⃣📦
+🪶🤙🅰️⛓️‍💥🅱️📦
+🪶🤙0️⃣⛓️‍💥1️⃣0️⃣📦
 ```
 Result:
 
@@ -141,14 +164,25 @@ Result:
 
 #### List
 Use 🌜🌛 to create a list. Lists have a variable size and can contain
-other lists.
+other lists. Printing a list uses Python's own representation, so
+strings inside it are shown with quotes:
 
 ```
-🪶🌜🅰️⛓️‍💥🅱️0️⃣⛓️‍💥1️⃣0️⃣🟢🔴🕳️🌜🌛🌛📦
+🪶🤙🌜🅰️⛓️‍💥🅱️0️⃣⛓️‍💥1️⃣0️⃣🟢🔴🕳️🌜🌛🌛📦
 ```
 Result:
 
-`[a, b, 0, 10, True, False, None, []]`
+`['a', 'b', 0, 10, True, False, None, []]`
+
+Use 👀 to index or slice a list — one index returns an item, two indices
+return a slice:
+
+```
+🪶🤙👀🤙🌜🅰️⛓️‍💥🅱️⛓️‍💥©️🌛1️⃣📦📦
+```
+Result:
+
+`b`
 
 ### Functions
 
@@ -171,22 +205,91 @@ Result:
 | 🏁 | `end` | Ends the program |
 | 🔣 | `chr` | Same as Python |
 | 🔎 | `find` | Dynamically looks up and calls a builtin or module function by name |
+| 🐙 | `find_attribut` | Looks up an attribute/method by name on a value and calls it if callable — dynamic, object-style method calls |
 | 🪞 | `list.copy` | Same as Python |
 | 📨 | `list.append` | Same as Python |
 | 🎞️ | `list.extend` | Same as Python |
 | 🗑️ | `list.remove` | Same as Python |
 | 🍿 | `list.pop` | Same as Python |
+| 👀 | `select_in_list` | Index (`l[i]`) or slice (`l[i:j]`) a list |
 | ⁉️ | `input` | Same as Python |
+| 🎲 | `random.randint` | Same as Python |
+| 🎰 | `random.random` | Same as Python |
+| 🎁 | `random.choice` | Same as Python |
+| ⏳ | `time.sleep` | Same as Python |
 
-Use 📦 to mark the end of a function's parameters.
-You can nest function calls:
+**A function emoji does not run on its own.** Encountering one produces a
+**reference** to that function — see "Function References" below. To
+actually call it, place 🤙 directly after its emoji; the function then
+runs using whatever follows, up to the next 📦, as its parameters. You
+can nest calls by putting 🤙 after each function that should run:
 
 ```
-🪶🅰️🔠🅱️📦©️📦
+🪶🤙🅰️🔠🤙🅱️📦©️📦
 ```
 Result:
 
 `aBc`
+
+### Function References
+Encountering a function emoji does not call it — it produces a
+**reference** to that function, the function itself, not executed. Used
+as plain data (e.g. printed on its own), a reference displays as
+`<fonction NAME>`:
+
+```
+🪶🤙🔠📦
+```
+Result:
+
+`<fonction str.upper>`
+
+A reference is not the same type as a string, so — like any two
+differently-typed values (see "Types" above) — it does not merge with an
+adjacent string; it is printed with a space in between instead:
+
+```
+🪶🤙🔠Ⓜ️📦
+```
+Result:
+
+`<fonction str.upper> m`
+
+To actually **call** a function, put 🤙 directly *after* its emoji — the
+values that follow (up to 📦) become its parameters:
+
+```
+🪶🤙Ⓜ️📦
+```
+Result:
+
+`m`
+
+A reference can also be stored in a variable and called later — 🤙
+placed directly after a variable that holds a reference calls it, using
+whatever follows the variable (up to 📦) as parameters:
+
+```
+😀🪶
+🪶🤙😀📦
+```
+Result:
+
+`<fonction print>`
+
+Here 😀 stores the reference to `print` (never called on this line), and
+the second line prints that reference as plain data.
+
+```
+😀🔠
+🪶🤙😀🤙Ⓜ️📦
+```
+Result:
+
+`M`
+
+Here 😀 stores the reference to `str.upper`, and `🤙😀🤙Ⓜ️` calls it with
+`"m"` as the argument.
 
 ### Operators
 
@@ -197,7 +300,7 @@ Result:
 | ➗ | `/` | Division |
 | 🪵 | `//` | Floor division |
 | 🪙 | `%` | Modulo |
-| ✳️ | `*` | Multiplication |
+| *️⃣ | `*` | Multiplication |
 | ⚡️ | `**` | Exponentiation |
 | 🟥 | N/A | Root (`before ** (1 / after)`, e.g. `after = 2` gives a square root) |
 | 🟰 | `==` | Equality |
@@ -208,13 +311,13 @@ Result:
 | 🔀 | `or` | Logical OR |
 | 📥 | `in` | Membership test |
 | 📤 | `not in` | Negative membership test |
-| ⚪️ | N/A | Reserved / not implemented yet (currently a no-op placeholder) |
+| ⚪️ | N/A | Joins two integers into a decimal number: `float(str(before) + "." + str(after))` |
 
 To use an operator, place it between two values:
 
 ```
-🪶1️⃣➕2️⃣📦
-🪶🔴🤝🟢📦
+🪶🤙1️⃣➕2️⃣📦
+🪶🤙🔴🤝🟢📦
 ```
 Result:
 
@@ -222,11 +325,20 @@ Result:
 
 `False`
 
+The decimal-join operator:
+
+```
+🪶🤙1️⃣⚪️2️⃣📦
+```
+Result:
+
+`1.2`
+
 There is no operator priority in UwU Script: all operations are evaluated
 left to right.
 
 ```
-🪶1️⃣➕2️⃣✳️3️⃣📦
+🪶🤙1️⃣➕2️⃣*️⃣3️⃣📦
 ```
 Result:
 
@@ -237,9 +349,9 @@ value, it is not treated as a list but as that plain value. This lets you
 control evaluation order:
 
 ```
-🪶🌜1️⃣➕🌜2️⃣✳️3️⃣🌛🌛📦
-🪶🌜🌜1️⃣➕2️⃣🌛🌛📦
-🪶🌜1️⃣➕2️⃣🅰️🌛📦
+🪶🤙🌜1️⃣➕🌜2️⃣*️⃣3️⃣🌛🌛📦
+🪶🤙🌜🌜1️⃣➕2️⃣🌛🌛📦
+🪶🤙🌜1️⃣➕2️⃣🅰️🌛📦
 ```
 Result:
 
@@ -247,7 +359,7 @@ Result:
 
 `[3]`
 
-`[3, a]`
+`[3, 'a']`
 
 ### Variables
 
@@ -256,10 +368,10 @@ existing variable) at the start of the line, followed by its new value.
 
 ```
 😀5️⃣0️⃣
-🪶😀📦
+🪶🤙😀📦
 
 😀1️⃣0️⃣
-🪶😀📦
+🪶🤙😀📦
 ```
 Result:
 
@@ -267,14 +379,17 @@ Result:
 
 `10`
 
-You can assign several variables on the same line:
+You can assign several variables on the same line. Note that, per the
+merging rule from "Types" above, printing them one after another with
+nothing between them merges same-type values together — use ⛓️‍💥 in the
+`print` call too if you want them to stay separate:
 
 ```
 😀😛5️⃣⛓️‍💥0️⃣
-🪶😀😛📦
+🪶🤙😀⛓️‍💥😛📦
 
 😀😇8️⃣⛓️‍💥3️⃣
-🪶😀😛😇📦
+🪶🤙😀⛓️‍💥😛⛓️‍💥😇📦
 ```
 Result:
 
@@ -287,12 +402,17 @@ The `if` keyword is 🤔, and a boolean value must follow it directly.
 The `if` block continues until the next 🔚. Everything between 🤔 and 🔚
 is only executed if the boolean is `True`.
 
+Assigning a variable directly to a comparison's result (e.g. `8️⃣💪2️⃣`
+with nothing else on the line) currently crashes the interpreter — a
+pre-existing bug unrelated to `🤙`. Wrapping the comparison in 🌜🌛
+avoids it, so the examples below do that:
+
 ```
-😀8️⃣💪2️⃣
-🪶😀📦
+😀🌜8️⃣💪2️⃣🌛
+🪶🤙😀📦
 
 🤔😀
-🪶🔠®️📦ℹ️🐍♓™️📦
+🪶🤙🔠🤙®️📦ℹ️🐍♓™️📦
 🔚
 ```
 Result:
@@ -305,14 +425,14 @@ To run something when the boolean is `False`, use 😌. Do not put a 🔚
 before 😌:
 
 ```
-😀8️⃣🤏2️⃣
-🪶😀📦
+😀🌜8️⃣🤏2️⃣🌛
+🪶🤙😀📦
 
 🤔😀
-🪶🔠®️📦ℹ️🐍♓™️📦
+🪶🤙🔠🤙®️📦ℹ️🐍♓™️📦
 
 😌
-🪶🔠🆖📦🅾️™️⚰️🔠®️📦ℹ️🐍♓™️📦
+🪶🤙🔠🤙🆖📦🅾️™️⚰️🔠🤙®️📦ℹ️🐍♓™️📦
 🔚
 ```
 Result:
@@ -326,16 +446,16 @@ then a third one, and so on:
 
 ```
 🤔🔴
-🪶1️⃣⛓️‍💥🔠®️📦ℹ️🐍♓™️📦
+🪶🤙1️⃣⛓️‍💥🔠🤙®️📦ℹ️🐍♓™️📦
 
 😏🔴
-🪶2️⃣⛓️‍💥🔠®️📦ℹ️🐍♓™️📦
+🪶🤙2️⃣⛓️‍💥🔠🤙®️📦ℹ️🐍♓™️📦
 
 😏🟢
-🪶3️⃣⛓️‍💥🔠®️📦ℹ️🐍♓™️📦
+🪶🤙3️⃣⛓️‍💥🔠🤙®️📦ℹ️🐍♓™️📦
 
 😌
-🪶🔠🅰️📦🛴🛴⚰️🔠🆖📦🅾️™️⚰️🔠®️📦ℹ️🐍♓™️📦
+🪶🤙🔠🤙🅰️📦🛴🛴⚰️🔠🤙🆖📦🅾️™️⚰️🔠🤙®️📦ℹ️🐍♓™️📦
 🔚
 ```
 Result:
@@ -346,10 +466,10 @@ You can also use 😏 without a trailing 😌:
 
 ```
 🤔🔴
-🪶1️⃣⛓️‍💥🔠®️📦ℹ️🐍♓™️📦
+🪶🤙1️⃣⛓️‍💥🔠🤙®️📦ℹ️🐍♓™️📦
 
 😏🟢
-🪶2️⃣⛓️‍💥🔠®️📦ℹ️🐍♓™️📦
+🪶🤙2️⃣⛓️‍💥🔠🤙®️📦ℹ️🐍♓™️📦
 🔚
 ```
 Result:
@@ -358,15 +478,15 @@ Result:
 
 ### Roadmap (not implemented yet)
 The interpreter's source code (`b.py`) contains comments describing
-features that are planned but **not yet available** — there is currently
-no emoji bound to them in the conversion table:
+features that are still planned but **not yet available**:
 
 - `for` loops (planned emoji: 🌀)
 - `while` loops (planned emoji: 🤗)
-- User-defined functions with parameters and `return` (planned emojis: 🌏, 👉, 👈, 🙏, 🔃)
-- Random number support
-- Object/method-style function calls
-- Additional special characters
+- User-defined functions with parameters and `return` (planned emojis: 🌏, 🙏, 🔃 — 👉/👈 were originally sketched for this too, but have since been reused for `{`/`}`)
 
-Do not rely on these — using their placeholder emojis today will fail,
+Random numbers, object/attribute-style calls, and a large set of special
+characters were previously listed here as planned — they are now
+implemented (🎲/🎰/🎁/⏳, 🐙, and the punctuation table above).
+
+Do not rely on the remaining placeholders — using them today will fail,
 since they are not registered in the conversion table yet.

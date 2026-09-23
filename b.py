@@ -62,6 +62,12 @@ def function_not(value):
 def fin(*arry):
     sys.exit(1)
 
+def function_name(func):
+    return getattr(func, "__qualname__", getattr(func, "__name__", str(func)))
+
+def sans_selecteur(emoji):
+    return emoji.replace("︎", "").replace("️", "")
+
 class Instructions():
     def __init__(self, name):
         self.name = name
@@ -247,6 +253,7 @@ table = {
     "🌜" : Instructions("start liste"),
     "🌛" : Instructions("end liste"),
     "🎭" : Instructions("naturalise"),
+    "🤙" : Instructions("executer"),
     "🤔" : Instructions("if"),
     "😏" : Instructions("elif"),
     "😌" : Instructions("else"),
@@ -270,7 +277,12 @@ table = {
     "⚪️" : Operation(".")
 }
 
-# fonctions d'objet se 
+TABLE_SANS_SELECTEUR = {
+    sans_selecteur(cle): cle
+    for cle in table
+}
+
+# fonctions d'objet se
 
 # fonctions avec parametres nomée
 

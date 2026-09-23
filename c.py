@@ -2,7 +2,7 @@ import grapheme
 import emoji as em
 import sys
 import inspect
-from b import table, Instructions, Variable, Operation
+from b import table, Instructions, Variable, Operation, function_name, sans_selecteur, TABLE_SANS_SELECTEUR
 import types
 INSTRUCTION_WANT_END = ["if", "for", "while"]
 
@@ -64,13 +64,14 @@ def get_liste(liste, end_wanted=[]):
                         sys.exit(1)
 
 
-            elif type(value) == Variable:
-                value = value.value
-            
-            elif callable(value):
-                resultats = do_function(emoji, liste[place + 1:])
-                value = resultats[0]
-                skip = place + resultats[1]
+            else:
+                if type(value) == Variable:
+                    value = value.value
+
+                if callable(value):
+                    resultats = call_function(value, liste[place + 1:], emoji)
+                    value = resultats[0]
+                    skip = place + resultats[1]
 
             if len(final_liste) == 0 or separer:
                 separer = False
@@ -91,29 +92,39 @@ def get_liste(liste, end_wanted=[]):
                 final_liste.append(value)
     return (do_opperation(final_liste), len(liste) + 1)
 
-def do_function(emoji, ligne):
-    
-    func = table[emoji]
-    parametres, skip = get_liste(ligne, end_wanted=["end paramettres"])
-    
+def call_function(func, ligne, label):
+
+    if not (ligne and ligne[0] in table.keys() and type(table[ligne[0]]) == Instructions and table[ligne[0]].name == "executer"):
+        return (func, 1)
+
+    parametres, skip = get_liste(ligne[1:], end_wanted=["end paramettres"])
+
     try:
         parms_possible = infos(func)
     except:
         parms_possible = (0, float("inf"))
-    
+
     if type(parametres) != list:
         parametres = [parametres]
 
     if len(parametres) < parms_possible[0]:
-        print(" 🚫 🤷 " + emoji + " 🤷 📦 🫵 🖕 ")
+        print(" 🚫 🤷 " + label + " 🤷 📦 🫵 🖕 ")
         print(parametres)
         sys.exit(1)
-    
+
     elif len(parametres) > parms_possible[1]:
-        print(" 🚫 🤯 " + emoji + " 🤯 🫵 🖕 ")
+        print(" 🚫 🤯 " + label + " 🤯 🫵 🖕 ")
         sys.exit(1)
-        
-    return (func(*parametres), skip)
+
+    parametres = [
+        "<fonction " + function_name(parametre) + ">" if callable(parametre) else parametre
+        for parametre in parametres
+    ]
+
+    return (func(*parametres), skip + 1)
+
+def do_function(emoji, ligne):
+    return call_function(table[emoji], ligne, emoji)
 
 def do_opperation(liste):
     
@@ -191,9 +202,14 @@ def get_emoji(line, look_at_chut=True):
     value = []
 
     for emoji in grapheme.graphemes(line):
+        if emoji not in table.keys():
+            normalise = sans_selecteur(emoji)
+            if normalise in TABLE_SANS_SELECTEUR:
+                emoji = TABLE_SANS_SELECTEUR[normalise]
+
         if look_at_chut and emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "chut":
             break
-        
+
         if em.is_emoji(emoji) or emoji in table.keys():
 
             value.append(emoji)
