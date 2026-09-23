@@ -1,25 +1,60 @@
 import sys
 import builtins
+import time
+import random
 from importlib import import_module
 
 NOM_FICHIER_PY = ["b", "c"]
 
+def is_digit(string):
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
+
+def select_in_list(liste, *arry):
+    if len(arry) == 1:
+        return liste[arry[0]]
+    else:
+        return liste[arry[0]:arry[1]]
+
+def find_attribut(obj, atr, *arry):
+    attribut = getattr(obj, atr, None)
+    if not callable(attribut):
+        return attribut
+        
+    if type(arry[0]) == list:
+        return attribut(*arry[0])
+        
+    return attribut(*arry)
+
 def find(*arry):
     if len(arry) == 1:
-        return getattr(builtins, arry[0])
-    
-    elif len(arry) == 2 and type(arry[1]) == str and arry[1] not in NOM_FICHIER_PY:
-        return getattr(import_module(arry[1]), arry[0])()
+        func = getattr(builtins, arry[0], None)
+        parms = []
     
     elif len(arry) == 2 and type(arry[1]) == list:
-        return getattr(builtins, arry[0])(*arry[1])
+        func = getattr(builtins, arry[0], None)
+        parms = arry[1]
+        
+    elif len(arry) == 2 and type(arry[1]) == str and arry[1] not in NOM_FICHIER_PY:
+        func = getattr(import_module(arry[1]), arry[0], None)
+        parms = []
     
     elif len(arry) >= 3 and arry[1] not in NOM_FICHIER_PY:
-        if type(arry[2]) != list:
-            return getattr(import_module(arry[1]), arry[0])(arry[2])
-        return getattr(import_module(arry[1]), arry[0])(*arry[2])
+        func = getattr(import_module(arry[1]), arry[0], None)
+        parms = arry[2]
+        if type(parms) != list:
+            parms = arry[2:]
+            
+    else:
+        raise Exception("error8")
+        
+    if not callable(func):
+        return func
     
-    raise Exception("error8")
+    return func(*parms)
 
 def function_not(value):
     return not value
@@ -34,6 +69,10 @@ class Instructions():
 class Variable():
     def __init__(self, value):
         self.value = value
+
+class Parms_Noinatif():
+    def __init__(self, directory):
+        self.directory = directory
 
 class Operation():
     def __init__(self, value):
@@ -88,7 +127,8 @@ class Operation():
                 def calcule(beafor, after):
                     return beafor not in after
             case ".":
-                calcule = ""
+                def calcule(beafor, after):
+                    return float(str(int(beafor)) + "." + str(int(after)))
                 
         self.calcule = calcule
         
@@ -121,6 +161,40 @@ table = {
     "🩺" : "y",
     "💤" : "z",
     "⚰️" : " ",
+    "📞" : "\\",
+    "🚥" : "-",
+    "✴️" : "*",
+    "🔘" : "•",
+    "💵" : "$",
+    "💶" : "€",
+    "❤️" : "♥",
+    "🦯" : "/",
+    "💴" : "¥",
+    "💷" : "£",
+    "🥿" : "_",
+    "⚫️" : ".",
+    "🚦" : "|",
+    "#️⃣" : "#",
+    "▶️" : ">",
+    "◀️" : "<",
+    "🥓" : "=",
+    "🌘" : "(",
+    "🌒" : ")",
+    "🫳" : "~",
+    "✨" : "+",
+    "🫐" : ":",
+    "🏒" : ";",
+    "⤴️" : ",",
+    "🍺" : "'",
+    "🍻" : "\"",
+    "📎" : "&",
+    "🎓" : "^",
+    "🐌" : "@",
+    "💯" : "%",
+    "👉" : "{",
+    "👈" : "}",
+    "🫸" : "[",
+    "🫷" : "]",
     "❗" : "!",
     "❓" : "!",
     "⤵️" : "\n",
@@ -155,12 +229,18 @@ table = {
     "🏁" : fin,
     "🔣" : chr,
     "🔎" : find,
+    "🐙" : find_attribut,
     "🪞" : list.copy,
     "📨" : list.append,
     "🎞️" : list.extend,
     "🗑️" : list.remove,
     "🍿" : list.pop,
+    "👀" : select_in_list,
     "⁉️" : input,
+    "🎲" : random.randint,
+    "🎰" : random.random,
+    "🎁" : random.choice,
+    "⏳" : time.sleep,
     "😶" : Instructions("chut"),
     "📦" : Instructions("end paramettres"),
     "⛓️‍💥" : Instructions("deconnecter"),
@@ -177,7 +257,7 @@ table = {
     "🟰" : Operation("egale"),
     "🪵" : Operation("division entière"),
     "🪙" : Operation("modulo"),
-    "✳️" : Operation("fois"),
+    "*️⃣" : Operation("fois"),
     "⚡️" : Operation("puissance"),
     "🟥" : Operation("racine"),
     "🚫" : Operation("pas egale"),
@@ -190,11 +270,9 @@ table = {
     "⚪️" : Operation(".")
 }
 
-# random
+# fonctions d'objet se 
 
-# fonction d'objet
-
-# caracteres spesiaux
+# fonctions avec parametres nomée
 
 # for 🌀 <new> <range or liste>
 # continue 
@@ -209,3 +287,5 @@ table = {
 # créé une fonction 🌏 <new> 👉 <new> <new> <new> 👈
 # return 🙏
 # end : next 🫷🔃
+
+# cree un objet
