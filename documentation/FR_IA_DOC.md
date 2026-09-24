@@ -207,8 +207,8 @@ Résultat :
 | 🙅 | `not` | Inverse `True`/`False` |
 | 🏁 | `end` | Termine le programme |
 | 🔣 | `chr` | Identique à Python |
-| 🔎 | `find` | Recherche et appelle dynamiquement une fonction native ou d'un module par son nom |
-| 🐙 | `find_attribut` | Recherche un attribut/une méthode par son nom sur une valeur et l'appelle si c'est appelable — appels de méthode dynamiques, façon objet |
+| 🔎 | `find` | Recherche dynamiquement une fonction native ou d'un module par son nom et renvoie une **référence** vers elle (ne l'appelle pas) |
+| 🐙 | `find_attribut` | Recherche dynamiquement un attribut/une méthode par son nom sur une valeur et le renvoie — une référence si c'est appelable, la valeur brute sinon (ne l'appelle pas) |
 | 🪞 | `list.copy` | Identique à Python |
 | 📨 | `list.append` | Identique à Python |
 | 🎞️ | `list.extend` | Identique à Python |
@@ -234,6 +234,25 @@ mettant 🤙 après chaque fonction à exécuter :
 Résultat :
 
 `aBc`
+
+**Au niveau supérieur (premier emoji d'une ligne), une fonction doit
+être appelée.** La laisser comme référence non appelée sans rien qui la
+consomme est une erreur — l'interpréteur considère qu'une instruction
+qui ne fait que construire une référence inutilisée est une erreur de
+frappe :
+
+```
+🪶🔠📦
+```
+Résultat :
+
+`🚫 🤷 🪶 🤷 🤙 🫵 🖕` (erreur, le programme s'arrête)
+
+Cette restriction ne s'applique qu'au début d'une ligne de premier
+niveau. Une référence brute est parfaitement valide — et c'est tout
+l'intérêt — quand elle est utilisée comme valeur : passée en argument,
+affichée au sein d'un appel plus large, ou stockée dans une variable
+(voir ci-dessous).
 
 ### Références de fonction
 Rencontrer un emoji de fonction ne l'appelle pas — cela produit une
@@ -296,6 +315,69 @@ Résultat :
 
 Ici, 😀 stocke la référence vers `str.upper`, et `🤙😀🤙Ⓜ️` l'appelle avec
 `"m"` comme argument.
+
+### Recherche dynamique (find / find_attribut)
+🔎 (`find`) et 🐙 (`find_attribut`) récupèrent des fonctions et des
+attributs qui n'ont pas leur propre emoji, par leur nom. Comme toute
+fonction, elles ne renvoient jamais qu'une **référence** — elles
+n'appellent jamais ce qu'elles trouvent. Pour utiliser le résultat,
+stockez-le dans une variable et appelez la variable avec 🤙, exactement
+comme dans « Références de fonction » ci-dessus.
+
+`find` prend un nom (une chaîne) et le cherche d'abord parmi les
+fonctions natives de Python :
+
+```
+😀🔎🤙🛴🔱🆖📦
+🪶🤙😀🤙♓ℹ️📦📦
+```
+Résultat :
+
+`2`
+
+Ici, 😀 stocke une référence vers la fonction native `len` (recherchée
+via la chaîne `"len"`, épelée lettre par lettre), et la seconde ligne
+l'appelle sur `"hi"`.
+
+Donnez un second nom à `find` — un module — pour atteindre une fonction
+de n'importe quel module importable, pas seulement celles de la table :
+
+```
+🥑🔎🤙®️🅰️🆖🆔ℹ️🆖™️⛓️‍💥®️🅰️🆖🆔🅾️Ⓜ️📦
+🪶🤙🥑🤙1️⃣⛓️‍💥1️⃣0️⃣📦📦
+```
+Résultat : un entier aléatoire entre `1` et `10` (`random.randint(1, 10)`).
+
+Notez le ⛓️‍💥 entre les deux noms : sans lui, les chaînes adjacentes
+`"randint"` et `"random"` fusionneraient en une seule (voir « Types »
+plus haut).
+
+`find_attribut` prend une valeur et un nom d'attribut, et renvoie ce que
+renverrait `getattr` — une référence vers une méthode liée si
+l'attribut est appelable, ou la valeur brute sinon :
+
+```
+💚🐙🤙♓ℹ️⛓️‍💥⛎🅿️🅿️🔱®️📦
+🪶🤙💚🤙📦📦
+```
+Résultat :
+
+`HI`
+
+Ici, 💚 stocke une référence vers `"hi".upper`, et la seconde ligne
+l'appelle sans argument.
+
+```
+🥝🐙🤙5️⃣⛓️‍💥®️🔱🅰️🛴📦
+🪶🤙🥝📦
+```
+Résultat :
+
+`5`
+
+Ici, `"real"` nomme un attribut brut (non appelable) de `5`, donc 🥝
+contient la valeur elle-même, pas une référence — l'afficher ne
+nécessite pas de 🤙.
 
 ### Opérateurs
 

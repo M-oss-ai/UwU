@@ -204,8 +204,8 @@ Result:
 | 🙅 | `not` | Inverts `True`/`False` |
 | 🏁 | `end` | Ends the program |
 | 🔣 | `chr` | Same as Python |
-| 🔎 | `find` | Dynamically looks up and calls a builtin or module function by name |
-| 🐙 | `find_attribut` | Looks up an attribute/method by name on a value and calls it if callable — dynamic, object-style method calls |
+| 🔎 | `find` | Dynamically looks up a builtin or module function by name and returns a **reference** to it (does not call it) |
+| 🐙 | `find_attribut` | Dynamically looks up an attribute/method by name on a value and returns it — a reference if it's callable, the plain value otherwise (does not call it) |
 | 🪞 | `list.copy` | Same as Python |
 | 📨 | `list.append` | Same as Python |
 | 🎞️ | `list.extend` | Same as Python |
@@ -230,6 +230,23 @@ can nest calls by putting 🤙 after each function that should run:
 Result:
 
 `aBc`
+
+**At the top level (a line's first emoji), a function must be called.**
+Leaving it as a bare, uncalled reference with nothing consuming it is an
+error — the interpreter assumes a statement that does nothing but build
+an unused reference is a mistake:
+
+```
+🪶🔠📦
+```
+Result:
+
+`🚫 🤷 🪶 🤷 🤙 🫵 🖕` (error, program stops)
+
+This restriction only applies at the start of a top-level line. A bare
+reference is perfectly fine — and is the whole point — when it is used
+as a value: passed as an argument, printed as part of a larger call, or
+stored in a variable (see below).
 
 ### Function References
 Encountering a function emoji does not call it — it produces a
@@ -290,6 +307,66 @@ Result:
 
 Here 😀 stores the reference to `str.upper`, and `🤙😀🤙Ⓜ️` calls it with
 `"m"` as the argument.
+
+### Dynamic Lookup (find / find_attribut)
+🔎 (`find`) and 🐙 (`find_attribut`) retrieve functions and attributes
+that don't have their own emoji, by name. Like every function, they only
+ever return a **reference** — they never call what they find. To use the
+result, store it in a variable and call the variable with 🤙, exactly as
+in "Function References" above.
+
+`find` takes a name (a string) and looks it up first among Python's
+builtins:
+
+```
+😀🔎🤙🛴🔱🆖📦
+🪶🤙😀🤙♓ℹ️📦📦
+```
+Result:
+
+`2`
+
+Here 😀 stores a reference to the builtin `len` (looked up by the string
+`"len"`, spelled out letter by letter), and the second line calls it on
+`"hi"`.
+
+Give `find` a second name — a module — to reach a function from any
+importable module, not just the built-in table:
+
+```
+🥑🔎🤙®️🅰️🆖🆔ℹ️🆖™️⛓️‍💥®️🅰️🆖🆔🅾️Ⓜ️📦
+🪶🤙🥑🤙1️⃣⛓️‍💥1️⃣0️⃣📦📦
+```
+Result: a random integer between `1` and `10` (`random.randint(1, 10)`).
+
+Note the ⛓️‍💥 between the two names: without it, the adjacent strings
+`"randint"` and `"random"` would merge into one (see "Types" above).
+
+`find_attribut` takes a value and an attribute name, and returns
+whatever `getattr` would — a bound method reference if the attribute is
+callable, or the plain value otherwise:
+
+```
+💚🐙🤙♓ℹ️⛓️‍💥⛎🅿️🅿️🔱®️📦
+🪶🤙💚🤙📦📦
+```
+Result:
+
+`HI`
+
+Here 💚 stores a reference to `"hi".upper`, and the second line calls it
+with no arguments.
+
+```
+🥝🐙🤙5️⃣⛓️‍💥®️🔱🅰️🛴📦
+🪶🤙🥝📦
+```
+Result:
+
+`5`
+
+Here `"real"` names a plain (non-callable) attribute of `5`, so 🥝 holds
+the value itself, not a reference — printing it needs no 🤙.
 
 ### Operators
 

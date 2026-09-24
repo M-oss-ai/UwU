@@ -63,7 +63,6 @@ def get_liste(liste, end_wanted=[]):
                         print(" 🚫 ❓ " + emoji + " 👇 🫵 🖕 ")
                         sys.exit(1)
 
-
             else:
                 if type(value) == Variable:
                     value = value.value
@@ -93,7 +92,6 @@ def get_liste(liste, end_wanted=[]):
     return (do_opperation(final_liste), len(liste) + 1)
 
 def call_function(func, ligne, label):
-
     if not (ligne and ligne[0] in table.keys() and type(table[ligne[0]]) == Instructions and table[ligne[0]].name == "executer"):
         return (func, 1)
 
@@ -109,7 +107,6 @@ def call_function(func, ligne, label):
 
     if len(parametres) < parms_possible[0]:
         print(" 🚫 🤷 " + label + " 🤷 📦 🫵 🖕 ")
-        print(parametres)
         sys.exit(1)
 
     elif len(parametres) > parms_possible[1]:
@@ -122,9 +119,6 @@ def call_function(func, ligne, label):
     ]
 
     return (func(*parametres), skip + 1)
-
-def do_function(emoji, ligne):
-    return call_function(table[emoji], ligne, emoji)
 
 def do_opperation(liste):
     
@@ -267,7 +261,7 @@ def instruction_if(fichier):
         else:
             return resultat[0] + instruction_if(fichier[resultat[0] - 1:]) - 1
 
-    
+
 def read_lines(fichier, end_wanted=[]):
     skip = 0
     for ligne in range(len(fichier)):
@@ -278,7 +272,10 @@ def read_lines(fichier, end_wanted=[]):
             value = table[fichier[ligne][0]]
             
             if callable(value):
-                do_function(fichier[ligne][0], fichier[ligne][1:])
+                value = call_function(table[fichier[ligne][0]], fichier[ligne][1:], fichier[ligne][0])
+                if callable(value[0]):
+                    print(" 🚫 🤷 " + fichier[ligne][0] + " 🤷 🤙 🫵 🖕 ")
+                    sys.exit(1)
                 
             elif type(value) == Instructions:
                 match value.name:

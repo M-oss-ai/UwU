@@ -19,42 +19,19 @@ def select_in_list(liste, *arry):
     else:
         return liste[arry[0]:arry[1]]
 
-def find_attribut(obj, atr, *arry):
+def find_attribut(obj, atr):
     attribut = getattr(obj, atr, None)
-    if not callable(attribut):
-        return attribut
-        
-    if type(arry[0]) == list:
-        return attribut(*arry[0])
-        
-    return attribut(*arry)
+    return attribut
 
-def find(*arry):
-    if len(arry) == 1:
-        func = getattr(builtins, arry[0], None)
-        parms = []
+def find(func, *arry):
+    if len(arry) == 0 and func in builtins.__dict__:
+        return getattr(builtins, func, None)
     
-    elif len(arry) == 2 and type(arry[1]) == list:
-        func = getattr(builtins, arry[0], None)
-        parms = arry[1]
-        
-    elif len(arry) == 2 and type(arry[1]) == str and arry[1] not in NOM_FICHIER_PY:
-        func = getattr(import_module(arry[1]), arry[0], None)
-        parms = []
-    
-    elif len(arry) >= 3 and arry[1] not in NOM_FICHIER_PY:
-        func = getattr(import_module(arry[1]), arry[0], None)
-        parms = arry[2]
-        if type(parms) != list:
-            parms = arry[2:]
+    elif len(arry) == 1 and type(func) == str and type(arry[0]) == str and arry[0] not in NOM_FICHIER_PY:
+        return getattr(import_module(arry[0]), func, None)
             
     else:
         raise Exception("error8")
-        
-    if not callable(func):
-        return func
-    
-    return func(*parms)
 
 def function_not(value):
     return not value
