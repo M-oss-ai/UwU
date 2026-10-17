@@ -2,7 +2,7 @@ import grapheme
 import emoji as em
 import sys
 import inspect
-from b import table, Instructions, Variable, Operation, function_name, sans_selecteur, TABLE_SANS_SELECTEUR
+from b import table, Instructions, Variable, Operation, Parms_Noinatif, function_name, sans_selecteur, TABLE_SANS_SELECTEUR
 import types
 INSTRUCTION_WANT_END = ["if", "for", "while"]
 
@@ -56,6 +56,9 @@ def get_liste(liste, end_wanted=[]):
                         value = resultats[0]
                         skip = place + resultats[1]
                     
+                    case "nomme":
+                        pass
+
                     case _ if value.name in end_wanted:
                         return (do_opperation(final_liste), place + 2)
 
@@ -91,9 +94,13 @@ def get_liste(liste, end_wanted=[]):
                 final_liste.append(value)
     return (do_opperation(final_liste), len(liste) + 1)
 
+def en_texte(valeur):
+    return "<fonction " + function_name(valeur) + ">" if callable(valeur) else valeur
+
+# retourne (valeur, skip, executee) : executee vaut False quand aucun 🤙 ne suit, valeur est alors la fonction brute
 def call_function(func, ligne, label):
     if not (ligne and ligne[0] in table.keys() and type(table[ligne[0]]) == Instructions and table[ligne[0]].name == "executer"):
-        return (func, 1)
+        return (func, 1, False)
 
     parametres, skip = get_liste(ligne[1:], end_wanted=["end paramettres"])
 
@@ -105,22 +112,50 @@ def call_function(func, ligne, label):
     if type(parametres) != list:
         parametres = [parametres]
 
-    if len(parametres) < parms_possible[0]:
+    positionnels = []
+    nommes = {}
+    for parametre in parametres:
+        if type(parametre) == Parms_Noinatif:
+            nommes.update(parametre.directory)
+        else:
+            positionnels.append(parametre)
+
+    if len(positionnels) + len(nommes) < parms_possible[0]:
         print(" 🚫 🤷 " + label + " 🤷 📦 🫵 🖕 ")
         sys.exit(1)
 
-    elif len(parametres) > parms_possible[1]:
+    elif len(positionnels) > parms_possible[1]:
         print(" 🚫 🤯 " + label + " 🤯 🫵 🖕 ")
         sys.exit(1)
 
-    parametres = [
-        "<fonction " + function_name(parametre) + ">" if callable(parametre) else parametre
-        for parametre in parametres
-    ]
+    positionnels = [en_texte(parametre) for parametre in positionnels]
+    nommes = {nom: en_texte(valeur) for nom, valeur in nommes.items()}
 
-    return (func(*parametres), skip + 1)
+    return (func(*positionnels, **nommes), skip + 1, True)
+
+def do_index(liste):
+    place = 1
+    while place < len(liste) - 1:
+        if type(liste[place]) == Operation and liste[place].est_index:
+            liste[place - 1 : place + 2] = [liste[place].calcule(liste[place - 1], liste[place + 1])]
+        else:
+            place += 1
+
+def do_nomme(liste):
+    place = 1
+    while place < len(liste) - 1:
+        if type(liste[place]) == Instructions and liste[place].name == "nomme":
+            liste[place - 1 : place + 2] = [Parms_Noinatif({liste[place - 1]: liste[place + 1]})]
+        else:
+            place += 1
+
+    for place in range(len(liste)):
+        if type(liste[place]) == Instructions and liste[place].name == "nomme":
+            print("error7" if place == 0 else "error8")
+            sys.exit(1)
 
 def do_opperation(liste):
+    do_index(liste)
     
     skip = 0
     hase_do_opreation = False
@@ -145,40 +180,39 @@ def do_opperation(liste):
             skip += 1
     if len(liste) == 1 and hase_do_opreation:
         return liste[0]
+
+    do_nomme(liste)
     
     return liste
 
 def creat_variable(ligne):
-    nombre = 0
-    while len(ligne) > nombre and (ligne[nombre] not in table.keys() or type(table[ligne[nombre]]) == Variable):
-        nombre += 1
-    
-    resultat = get_liste(ligne[nombre:])[0]
-    nombre = min(len(resultat), nombre)
+    resultat = get_liste(ligne[1:])[0]
+    if type(resultat) == list:
+        if len(resultat) == 0:
+            print("error9")
+            sys.exit(1)
 
-    for position in range(nombre):
-        value = resultat[position]
-        table[ligne[position]] = Variable(value)
+        resultat = resultat[0]
 
+    table[ligne[0]] = Variable(resultat)
+
+def est_fin(emoji):
+    return emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "end paramettres"
+
+# 🎭📦📦 donne un 📦 littéral ; sinon le premier 📦 ferme le texte
 def naturalise(ligne):
+    if len(ligne) >= 2 and est_fin(ligne[0]) and est_fin(ligne[1]):
+        return (ligne[0], 3)
+
     value = ""
     for place in range(len(ligne)):
-        emoji = ligne[place]
-        if emoji in table.keys() and type(table[emoji]) == Instructions and table[emoji].name == "end paramettres":
-    
-            if len(ligne) > place and ligne[place + 1] in table.keys() and type(table[ligne[place + 1]]) == Instructions and table[ligne[place + 1]].name == "end paramettres":
-                value += emoji
-                return (value, place + 3)
-                
-            elif place == 0:
-                value += emoji
-                
+        if est_fin(ligne[place]):
             return (value, place + 2)
-            
-        value += emoji
-    
+
+        value += ligne[place]
+
     return (value, len(ligne) + 1)
-    
+
 
 def get_input(ligne):
     parametres = get_liste(ligne, end_wanted=["end paramettres"])
@@ -268,15 +302,19 @@ def read_lines(fichier, end_wanted=[]):
         if ligne < skip:
             continue
 
-        if fichier[ligne][0] in table.keys() and type(table[fichier[ligne][0]]) != Variable:
+        if fichier[ligne][0] in table.keys():
             value = table[fichier[ligne][0]]
-            
-            if callable(value):
+
+            if type(value) == Variable:
+                if not (callable(value.value) and call_function(value.value, fichier[ligne][1:], fichier[ligne][0])[2]):
+                    creat_variable(fichier[ligne])
+
+            elif callable(value):
                 value = call_function(table[fichier[ligne][0]], fichier[ligne][1:], fichier[ligne][0])
-                if callable(value[0]):
+                if not value[2]:
                     print(" 🚫 🤷 " + fichier[ligne][0] + " 🤷 🤙 🫵 🖕 ")
                     sys.exit(1)
-                
+
             elif type(value) == Instructions:
                 match value.name:
                     case "naturalise":
@@ -285,7 +323,7 @@ def read_lines(fichier, end_wanted=[]):
                         get_input(fichier[ligne][1:])
                     case "if":
                         skip = ligne + instruction_if(fichier[ligne:])
-                    case  x if x in end_wanted:
+                    case x if x in end_wanted:
                         return (ligne, x)
                     case _:
                         print("error5")

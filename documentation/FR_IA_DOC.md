@@ -6,9 +6,7 @@ emojis comme syntaxe. Il est fortement inspiré de Python.
 > **Remarque sur ce document.** Ce fichier corrige le `README.md`
 > d'origine et reste synchronisé avec l'interpréteur réel (`b.py` /
 > `c.py`). Chaque exemple ci-dessous a été exécuté contre le code actuel,
-> pas seulement déduit à la main — y compris les parties sur `🤙`
-> (références de fonction) et les ajouts ponctuation/aléatoire/attributs
-> fusionnés depuis `main`.
+> pas seulement déduit à la main.
 
 ## Documentation
 
@@ -187,6 +185,112 @@ Résultat :
 
 `b`
 
+#### Récupérer un élément (🎯)
+Placez 🎯 entre une liste (ou une chaîne) et un index pour obtenir cet
+élément — l'équivalent du `("a", "b")[1]` de Python. Le premier élément a
+pour index `0` :
+
+```
+🪶🤙🌜🅰️⛓️‍💥🅱️🌛🎯1️⃣📦
+🪶🤙🅰️🅱️©️🎯1️⃣📦
+```
+Résultat :
+
+`b`
+
+`b`
+
+La liste peut être une variable ou le résultat d'une fonction, l'index
+peut être n'importe quelle valeur, et 🎯 peut être enchaîné pour entrer
+dans des listes imbriquées. Quand l'élément est lui-même une liste, il
+est conservé entier :
+
+```
+😀🌜🌜1️⃣⛓️‍💥2️⃣🌛⛓️‍💥3️⃣🌛
+🪶🤙😀🎯0️⃣📦
+🪶🤙😀🎯0️⃣🎯1️⃣📦
+```
+Résultat :
+
+`[1, 2]`
+
+`2`
+
+Contrairement aux autres opérateurs (voir « Opérateurs » plus bas), 🎯
+est toujours appliqué en premier, il n'a donc pas besoin d'être groupé.
+Un index peut être calculé avec 🌜🌛, ce qui est aussi la façon d'écrire
+un index négatif (il n'y a pas de signe moins dans les nombres) :
+
+```
+😀🌜5️⃣⛓️‍💥6️⃣🌛
+🪶🤙1️⃣0️⃣➕😀🎯1️⃣📦
+🪶🤙😀🎯🌜0️⃣➖1️⃣🌛📦
+```
+Résultat :
+
+`16`
+
+`6`
+
+Un index hors de la liste arrête le programme avec l'`IndexError` de
+Python. 👀 (ci-dessus) fait le même travail sous forme de fonction, et
+découpe aussi des tranches.
+
+### Emoji littéraux (🎭)
+Les emojis ont normalement un sens : 🅰️ est la lettre `"a"`, ➕ est un
+opérateur, et un emoji que le langage ne connaît pas est une erreur. 🎭
+transforme les emojis qui suivent en texte brut, tels que tapés, jusqu'au
+prochain 📦. C'est ainsi que l'on affiche un emoji ou qu'on en garde un
+comme donnée.
+
+```
+🪶🤙🎭😀🌀📦📦
+```
+Résultat :
+
+`😀🌀`
+
+Le premier 📦 termine le texte et appartient à 🎭 ; le second ferme
+l'appel à 🪶, comme d'habitude. Le texte est une chaîne normale : elle
+fusionne avec les chaînes voisines et peut être stockée dans une
+variable.
+
+```
+🪶🤙🎭😀📦🅰️📦
+💚🎭🌀📦
+🪶🤙💚📦
+```
+Résultat :
+
+`😀a`
+
+`🌀`
+
+Sans 📦 de fermeture, le texte court jusqu'à la fin de la ligne. Seuls
+les emojis peuvent faire partie du texte — tout le reste (lettres,
+espaces) est supprimé, comme partout ailleurs dans un fichier. Les
+opérateurs et les instructions sont conservés comme texte :
+
+```
+🪶🤙🎭➕🤙📦📦
+```
+Résultat :
+
+`➕🤙`
+
+Pour mettre un 📦 dans le texte, fermez le texte, puis ajoutez `🎭📦📦`,
+qui représente un 📦 littéral :
+
+```
+🪶🤙🎭😀🌀📦🎭📦📦📦
+🪶🤙🎭📦📦📦
+```
+Résultat :
+
+`😀🌀📦`
+
+`📦`
+
 ### Fonctions
 
 | Emoji | Fonction | Description |
@@ -248,11 +352,13 @@ Résultat :
 
 `🚫 🤷 🪶 🤷 🤙 🫵 🖕` (erreur, le programme s'arrête)
 
-Cette restriction ne s'applique qu'au début d'une ligne de premier
-niveau. Une référence brute est parfaitement valide — et c'est tout
-l'intérêt — quand elle est utilisée comme valeur : passée en argument,
-affichée au sein d'un appel plus large, ou stockée dans une variable
-(voir ci-dessous).
+Cette restriction ne s'applique qu'aux fonctions de la table, au début
+d'une ligne de premier niveau. Une référence brute est parfaitement
+valide — et c'est tout l'intérêt — quand elle est utilisée comme valeur :
+passée en argument, affichée au sein d'un appel plus large, ou stockée
+dans une variable (voir ci-dessous). Une ligne qui commence par une
+*variable* contenant une fonction est différente : voir « Références de
+fonction » ci-dessous.
 
 ### Références de fonction
 Rencontrer un emoji de fonction ne l'appelle pas — cela produit une
@@ -315,6 +421,109 @@ Résultat :
 
 Ici, 😀 stocke la référence vers `str.upper`, et `🤙😀🤙Ⓜ️` l'appelle avec
 `"m"` comme argument.
+
+Une ligne qui **commence** par une variable contenant une fonction est
+une instruction. Si 🤙 suit la variable, la fonction est appelée (son
+résultat est jeté, comme pour toute autre instruction) ; sinon la ligne
+est une affectation normale et la variable est réassignée :
+
+```
+😀🪶
+😀🤙Ⓜ️📦
+```
+Résultat :
+
+`m`
+
+```
+😀🪶
+😀🔠
+🪶🤙😀🤙Ⓜ️📦📦
+```
+Résultat :
+
+`M`
+
+Ici la deuxième ligne n'a pas de 🤙 : elle réassigne donc 😀 à
+`str.upper` ; la troisième ligne l'appelle.
+
+Le résultat de l'appel d'une fonction stockée peut être stocké comme
+n'importe quelle autre valeur :
+
+```
+😀🔠
+💚😀🤙Ⓜ️📦
+🪶🤙💚📦
+```
+Résultat :
+
+`M`
+
+### Paramètres nommés (📛)
+Certaines fonctions prennent des paramètres nommés, comme `sep` et `end` de
+`print`. Écrivez le nom (c'est du texte, épelé avec les emojis lettres),
+puis 📛, puis la valeur, parmi les autres paramètres. Voici
+`print("hello world", end=". \n")` :
+
+```
+🪶🤙♓🔱🛴🛴🅾️⚰️〰️🅾️®️🛴🆔⛓️‍💥🔱🆖🆔📛⚫️⚰️⤵️📦
+🪶🤙Ⓜ️📦
+```
+Résultat :
+
+`hello world. `
+
+`m`
+
+Ici `end` remplace le saut de ligne habituel de `print` par un point, une
+espace et un saut de ligne (`⚫️⚰️⤵️`), donc le second `print` commence sur
+une nouvelle ligne.
+
+Un paramètre nommé est un élément de plus dans la liste des paramètres.
+Quand deux textes se suivent — le paramètre précédent et le nom, ou une
+valeur et le nom suivant — séparez-les avec ⛓️‍💥, sinon ils fusionnent
+(voir « Types ») :
+
+```
+🪶🤙🅰️⛓️‍💥🅱️⛓️‍💥💲🔱🅿️📛🚥⛓️‍💥🔱🆖🆔📛❗📦
+```
+Résultat :
+
+`a-b!`
+
+La valeur va jusqu'au prochain ⛓️‍💥 ou 📦 et peut être n'importe quelle
+expression : 📛 est appliqué après les opérateurs (et après 🎯), il n'a donc
+jamais besoin de groupement.
+
+```
+🪶🤙🅰️⛓️‍💥🅱️⛓️‍💥💲🔱🅿️📛🚥➕🚥📦
+```
+Résultat :
+
+`a--b`
+
+Cela fonctionne avec toute fonction qui accepte le nom, quelle qu'elle
+soit : une fonction de la table, une fonction trouvée avec 🔎, ou une
+fonction stockée dans une variable (appelée comme instruction quand la
+ligne commence par la variable).
+
+```
+🪶🤙🗂️🤙🌜1️⃣⛓️‍💥3️⃣⛓️‍💥2️⃣🌛⛓️‍💥®️🔱♈🔱®️💲🔱📛🟢📦📦
+🪶🤙🔢🤙🎏🎏⛓️‍💥🅱️🅰️💲🔱📛1️⃣6️⃣📦📦
+😀🪶
+😀🤙🅰️⛓️‍💥🅱️⛓️‍💥💲🔱🅿️📛🚥📦
+```
+Résultat :
+
+`[3, 2, 1]`
+
+`255`
+
+`a-b`
+
+Un nom que la fonction ne connaît pas provoque une `TypeError` de Python.
+Un 📛 sans nom avant lui, ou sans valeur après lui, arrête le programme
+(`error7` / `error8`).
 
 ### Recherche dynamique (find / find_attribut)
 🔎 (`find`) et 🐙 (`find_attribut`) récupèrent des fonctions et des
@@ -379,6 +588,42 @@ Ici, `"real"` nomme un attribut brut (non appelable) de `5`, donc 🥝
 contient la valeur elle-même, pas une référence — l'afficher ne
 nécessite pas de 🤙.
 
+#### Ce qui peut être trouvé
+La recherche est un simple `getattr` : n'importe quelle fonction native et
+n'importe quelle fonction de n'importe quel module importable peut donc
+être trouvée, pas seulement celles qui ont leur propre emoji (testé sur
+toutes les fonctions natives dont le nom est en minuscules et sur les
+fonctions publiques de `math`, `random`, `time`, `json`, `statistics`,
+`itertools`, `operator`, `functools`, `os`, `sys`, `re`, `textwrap`,
+`datetime` et `calendar`). Une valeur qui n'est pas une fonction (comme
+`math.pi`) est renvoyée telle quelle, et un module trouvé ainsi peut être
+donné à 🐙 pour atteindre ce qu'il contient.
+
+#### Épeler un nom
+Un nom est du texte, construit avec les emojis lettres et 🥿 (`_`). Les
+chiffres sont des nombres, pas du texte : un nom qui en contient
+s'assemble donc avec ➕ et 🔤 (`str`) ; les majuscules viennent de 🔠 de
+la même façon. Par exemple `math.log10` :
+
+```
+😀🔎🤙🛴🅾️🐍➕🔤🤙1️⃣0️⃣📦⛓️‍💥Ⓜ️🅰️™️♓📦
+🪶🤙😀🤙1️⃣0️⃣0️⃣0️⃣📦📦
+```
+Résultat :
+
+`3.0`
+
+#### Limites
+- **Tout n'a pas un nom à rechercher.** 🙅, 🏁, 👀, 🔎 et 🐙 sont définies
+  par l'interpréteur lui-même (`b.py`), et `find` refuse les modules `b`
+  et `c` : utilisez leur propre emoji.
+- **Une fonction ne peut pas être passée en argument**, pas même comme
+  paramètre nommé. Une référence donnée en paramètre arrive à la fonction
+  appelée sous forme du texte `<fonction NOM>` (c'est ce qui rend
+  l'affichage d'une référence lisible), donc les fonctions qui attendent
+  une fonction — `map`, `filter`, `functools.reduce`, un paramètre `key=`,
+  ou 🐙 appliqué à une fonction ou une classe — ne sont pas utilisables.
+
 ### Opérateurs
 
 | Emoji | Python | Action |
@@ -400,6 +645,7 @@ nécessite pas de 🤙.
 | 📥 | `in` | Test d'appartenance |
 | 📤 | `not in` | Test de non-appartenance |
 | ⚪️ | N/A | Assemble deux entiers en un nombre décimal : `float(str(avant) + "." + str(après))` |
+| 🎯 | `[ ]` | Élément à un index : `liste 🎯 index` (voir « Récupérer un élément ») |
 
 Pour utiliser un opérateur, placez-le entre deux valeurs :
 
@@ -423,7 +669,8 @@ Résultat :
 `1.2`
 
 Il n'y a pas de priorité d'opérateurs en UwU Script : toutes les
-opérations sont évaluées de gauche à droite.
+opérations sont évaluées de gauche à droite — sauf 🎯, toujours appliqué
+en premier (voir « Récupérer un élément »).
 
 ```
 🪶🤙1️⃣➕2️⃣*️⃣3️⃣📦
@@ -451,9 +698,9 @@ Résultat :
 
 ### Variables
 
-UwU Script n'a pas d'affectation `=`. Il suffit de placer un emoji
-inconnu (ou une variable existante) en début de ligne, suivi de sa
-nouvelle valeur.
+UwU Script n'a pas d'affectation `=`. Une ligne qui commence par un emoji
+inconnu, ou par une variable existante, l'assigne : tout ce qui suit ce
+premier emoji est la valeur.
 
 ```
 😀5️⃣0️⃣
@@ -468,37 +715,37 @@ Résultat :
 
 `10`
 
-Vous pouvez assigner plusieurs variables sur la même ligne. Notez que,
-selon la règle de fusion de « Types » ci-dessus, les afficher l'une
-après l'autre sans rien entre elles fusionne les valeurs de même type —
-utilisez ⛓️‍💥 dans l'appel `print` aussi si vous voulez qu'elles restent
-séparées :
+Une seule variable est assignée par ligne : un second nom sur la ligne
+est donc lu comme faisant partie de la valeur (et c'est une erreur s'il
+est inconnu). Si la valeur est composée de plusieurs valeurs séparées par
+⛓️‍💥, la première est conservée. Une ligne avec un nom et sans valeur arrête
+le programme avec `error9`.
 
 ```
-😀😛5️⃣⛓️‍💥0️⃣
-🪶🤙😀⛓️‍💥😛📦
-
-😀😇8️⃣⛓️‍💥3️⃣
-🪶🤙😀⛓️‍💥😛⛓️‍💥😇📦
+😀5️⃣⛓️‍💥🅰️
+🪶🤙😀📦
 ```
 Résultat :
 
-`5 0`
+`5`
 
-`8 0 3`
+Une variable peut contenir n'importe quelle valeur, y compris une
+fonction (voir « Références de fonction ») et le résultat d'un appel de
+fonction.
 
 ### If (condition)
 Le mot-clé `if` est 🤔, une valeur booléenne doit le suivre directement.
 Le bloc `if` continue jusqu'au prochain 🔚. Tout ce qui se trouve entre
 🤔 et 🔚 n'est exécuté que si le booléen vaut `True`.
 
-Assigner directement une variable au résultat d'une comparaison (ex.
-`8️⃣💪2️⃣` seul sur la ligne) fait actuellement planter l'interpréteur —
-un bug préexistant, sans rapport avec `🤙`. Entourer la comparaison de
-🌜🌛 l'évite, donc les exemples ci-dessous font ainsi :
+Une comparaison peut être assignée à une variable comme n'importe quelle
+autre valeur. La condition après 🤔 doit être une seule valeur booléenne
+— une variable qui en contient une, ou une comparaison groupée avec 🌜🌛
+— et une comparaison écrite directement après 🤔 n'est pas supportée,
+donc les exemples ci-dessous la stockent d'abord :
 
 ```
-😀🌜8️⃣💪2️⃣🌛
+😀8️⃣💪2️⃣
 🪶🤙😀📦
 
 🤔😀
@@ -515,7 +762,7 @@ Pour exécuter quelque chose quand le booléen vaut `False`, utilisez 😌.
 Ne mettez pas de 🔚 avant 😌 :
 
 ```
-😀🌜8️⃣🤏2️⃣🌛
+😀8️⃣🤏2️⃣
 🪶🤙😀📦
 
 🤔😀
@@ -576,6 +823,7 @@ disponibles** :
 - Fonctions définies par l'utilisateur avec paramètres et `return`
   (emojis prévus : 🌏, 🙏, 🔃 — 👉/👈 avaient aussi été envisagés pour
   ça, mais sont désormais réutilisés pour `{`/`}`)
+- Création d'objets
 
 Le support des nombres aléatoires, les appels façon objet/attribut, et
 un grand nombre de caractères spéciaux figuraient auparavant ici comme

@@ -113,7 +113,12 @@ class Operation():
                 def calcule(beafor, after):
                     return float(str(int(beafor)) + "." + str(int(after)))
                 
+            case "index":
+                def calcule(beafor, after):
+                    return beafor[after]
+
         self.calcule = calcule
+        self.est_index = value == "index"
         
     
 table = {
@@ -235,6 +240,7 @@ table = {
     "😏" : Instructions("elif"),
     "😌" : Instructions("else"),
     "🔚" : Instructions("end"),
+    "📛" : Instructions("nomme"),
     "➕" : Operation("plus"),
     "➖" : Operation("moin"),
     "➗" : Operation("divisé"),
@@ -251,17 +257,14 @@ table = {
     "🔀" : Operation("or") ,
     "📥" : Operation("in"),
     "📤" : Operation("not in"),
-    "⚪️" : Operation(".")
+    "⚪️" : Operation("."),
+    "🎯" : Operation("index")
 }
 
 TABLE_SANS_SELECTEUR = {
     sans_selecteur(cle): cle
     for cle in table
 }
-
-# fonctions d'objet se
-
-# fonctions avec parametres nomée
 
 # for 🌀 <new> <range or liste>
 # continue 
@@ -278,3 +281,4 @@ TABLE_SANS_SELECTEUR = {
 # end : next 🫷🔃
 
 # cree un objet
+# print("hello world", end=". \n")
