@@ -6,6 +6,7 @@ It is heavily inspired by Python.
 ## Project structure
 
 - [`a.txt`](a.txt) — example UwU Script source file
+- [`text.txt`](text.txt) — a series of self-checking tests: paste it into `a.txt` and run the interpreter, each test prints `N ok`
 - [`b.py`](b.py) — emoji-to-value conversion table and core building blocks
 - [`c.py`](c.py) — the interpreter that reads and runs a UwU Script file
 

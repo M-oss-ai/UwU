@@ -68,7 +68,7 @@ Résultat :
 | 💤 | `"z"` |
 | ⚰️ | `" "` |
 | ❗ | `"!"` |
-| ❓ | `"!"` (actuellement mappé sur `!` également, pas `?` — cela ressemble à un bug de l'interpréteur, documenté tel quel) |
+| ❓ | `"?"` |
 | 🗨️ | `""` |
 | ⤵️ | `"\n"` |
 | 0️⃣ | `0` |
@@ -102,10 +102,17 @@ Ponctuation et autres caractères spéciaux :
 | 🥿 | `"_"` | 🎓 | `"^"` |
 | ⚫️ | `"."` | 🐌 | `"@"` |
 | 🚦 | `"\|"` | 💯 | `"%"` |
-| #️⃣ | `"#"` | 👉 | `"{"` |
-| ▶️ | `">"` | 👈 | `"}"` |
+| #️⃣ | `"#"` | 🤜 | `"{"` |
+| ▶️ | `">"` | 🤛 | `"}"` |
 | ◀️ | `"<"` | 🫸 | `"["` |
-| 🥓 | `"="` | 🫷 | `"]"` |
+| 🥓 | `"="` | 🫲 | `"]"` |
+
+Chaque emoji n'a qu'un seul sens. 🤜 🤛 et 🫲 sont les caractères `{`, `}` et
+`]`. 👉, 👈 et 🫷 sont des mots-clés, pas des caractères : 👉 👈 entourent les
+paramètres d'une fonction ou les arguments d'une classe, et 🫷 ferme une
+boucle, une fonction ou une classe (voir « Boucles », « Fonctions définies par
+l'utilisateur » et « Classes et objets »). Un mot-clé n'a pas de valeur : on ne
+peut pas l'utiliser à l'intérieur d'une expression.
 
 ### Types
 Vous pouvez obtenir le type d'une valeur avec 🏷️.
@@ -350,7 +357,9 @@ frappe :
 ```
 Résultat :
 
-`🚫 🤷 🪶 🤷 🤙 🫵 🖕` (erreur, le programme s'arrête)
+`🤦 🫵 🪶 🤙 ❓ 🙈 🤡 🛴1️⃣`
+
+`Ligne 1 : 🪶 est une fonction, et écrire son nom ne l'exécute pas. Pour l'exécuter, écris 🤙 juste après son nom, puis les valeurs, puis 📦.`
 
 Cette restriction ne s'applique qu'aux fonctions de la table, au début
 d'une ligne de premier niveau. Une référence brute est parfaitement
@@ -523,7 +532,7 @@ Résultat :
 
 Un nom que la fonction ne connaît pas provoque une `TypeError` de Python.
 Un 📛 sans nom avant lui, ou sans valeur après lui, arrête le programme
-(`error7` / `error8`).
+avec une erreur (voir « Messages d'erreur »).
 
 ### Recherche dynamique (find / find_attribut)
 🔎 (`find`) et 🐙 (`find_attribut`) récupèrent des fonctions et des
@@ -719,7 +728,7 @@ Une seule variable est assignée par ligne : un second nom sur la ligne
 est donc lu comme faisant partie de la valeur (et c'est une erreur s'il
 est inconnu). Si la valeur est composée de plusieurs valeurs séparées par
 ⛓️‍💥, la première est conservée. Une ligne avec un nom et sans valeur arrête
-le programme avec `error9`.
+le programme avec une erreur.
 
 ```
 😀5️⃣⛓️‍💥🅰️
@@ -733,16 +742,28 @@ Une variable peut contenir n'importe quelle valeur, y compris une
 fonction (voir « Références de fonction ») et le résultat d'un appel de
 fonction.
 
-### If (condition)
-Le mot-clé `if` est 🤔, une valeur booléenne doit le suivre directement.
-Le bloc `if` continue jusqu'au prochain 🔚. Tout ce qui se trouve entre
-🤔 et 🔚 n'est exécuté que si le booléen vaut `True`.
+Les emojis qui font partie du langage — lettres, chiffres, fonctions,
+opérateurs et mots-clés comme 🌀 ou 🤔 — ne peuvent pas servir de noms de
+variable.
 
-Une comparaison peut être assignée à une variable comme n'importe quelle
-autre valeur. La condition après 🤔 doit être une seule valeur booléenne
-— une variable qui en contient une, ou une comparaison groupée avec 🌜🌛
-— et une comparaison écrite directement après 🤔 n'est pas supportée,
-donc les exemples ci-dessous la stockent d'abord :
+### If (condition)
+Le mot-clé `if` est 🤔, suivi d'une condition : la première valeur de ce
+qui suit est testée. Le bloc `if` continue jusqu'au prochain 🔚. Tout ce
+qui se trouve entre 🤔 et 🔚 n'est exécuté que si la condition est vraie.
+La condition peut être une comparaison écrite juste après 🤔 :
+
+```
+🤔8️⃣💪2️⃣
+🪶🤙🔠🤙®️📦ℹ️🐍♓™️📦
+🔚
+```
+Résultat :
+
+`Right`
+
+Elle peut aussi être une variable qui contient un booléen : une
+comparaison peut être assignée à une variable comme n'importe quelle autre
+valeur, puis testée plus tard.
 
 ```
 😀8️⃣💪2️⃣
@@ -813,23 +834,853 @@ Résultat :
 
 `2 Right`
 
+### Boucles
+Une boucle `for` répète un bloc pour chaque élément d'un range, d'une liste
+ou d'une chaîne. Écrivez 🌀, puis la variable qui reçoit chaque élément (un
+emoji inutilisé, ou une variable existante), puis la séquence. Le bloc est
+formé des lignes suivantes et se termine par une ligne contenant
+uniquement 🫷 :
+
+```
+🌀😀📏🤙3️⃣📦
+🪶🤙😀📦
+🫷
+```
+Résultat :
+
+`0`
+
+`1`
+
+`2`
+
+La séquence est la première valeur après la variable : ici `📏🤙3️⃣📦` est
+`range(3)`, mais ce peut aussi être une liste, une chaîne ou une variable
+qui en contient une. Après la boucle, la variable garde sa dernière valeur.
+
+```
+🌀😀🌜🅰️⛓️‍💥🅱️⛓️‍💥©️🌛
+🪶🤙😀📦
+🫷
+```
+Résultat :
+
+`a`
+
+`b`
+
+`c`
+
+Une boucle `while` utilise 🤗 suivi d'une condition (comme 🤔). Le bloc est
+répété tant que la condition est vraie, et la condition est évaluée à
+nouveau avant chaque passage :
+
+```
+😀0️⃣
+🤗😀🤏3️⃣
+🪶🤙😀📦
+😀😀➕1️⃣
+🫷
+```
+Résultat :
+
+`0`
+
+`1`
+
+`2`
+
+Dans une boucle, ⏭️ passe directement au tour suivant et 🛑 quitte la
+boucle. On peut les placer n'importe où dans le bloc, typiquement dans un
+`if`, et ils n'agissent que sur la boucle la plus intérieure :
+
+```
+🌀😀📏🤙1️⃣0️⃣📦
+🤔😀🟰2️⃣
+⏭️
+🔚
+🤔😀🟰5️⃣
+🛑
+🔚
+🪶🤙😀📦
+🫷
+```
+Résultat :
+
+`0`
+
+`1`
+
+`3`
+
+`4`
+
+Les boucles peuvent contenir d'autres boucles, des blocs `if` et des
+définitions de fonction. ⏭️ ou 🛑 hors d'une boucle, une boucle jamais
+fermée et un en-tête sans rien à parcourir arrêtent le programme avec une
+erreur.
+
+### Fonctions définies par l'utilisateur
+🌏 définit une fonction. Écrivez 🌏, le nom de la fonction (un emoji
+inutilisé, ou une variable existante), puis 👉, les noms des paramètres
+(des emojis inutilisés, les uns après les autres) et 👈. Le corps est formé
+des lignes suivantes et la définition se termine par une ligne contenant
+uniquement 🫷, comme une boucle. 🙏 renvoie une valeur :
+
+```
+🌏💚👉🍎🍌👈
+🙏🍎➕🍌
+🫷
+🪶🤙💚🤙1️⃣⛓️‍💥2️⃣📦📦
+```
+Résultat :
+
+`3`
+
+Une fonction s'appelle comme toute autre : 🤙 juste après son nom, puis les
+paramètres jusqu'à 📦. Les paramètres nommés fonctionnent aussi, en
+donnant l'emoji du paramètre comme texte avec 🎭. Un appel avec un mauvais
+nombre de paramètres donne les erreurs habituelles.
+
+🙏 quitte la fonction immédiatement — même depuis une boucle ou un `if` —
+et renvoie la première valeur écrite après lui. Sans 🙏, ou avec 🙏 seul,
+la fonction renvoie `None` :
+
+```
+🌏💚👉🍎👈
+🌀😀🍎
+🤔😀🪙2️⃣🟰0️⃣
+🙏😀
+🔚
+🫷
+🙏🕳️
+🫷
+🪶🤙💚🤙🌜3️⃣⛓️‍💥5️⃣⛓️‍💥6️⃣⛓️‍💥7️⃣🌛📦📦
+```
+Résultat :
+
+`6`
+
+Une fonction peut s'appeler elle-même :
+
+```
+🌏🧱👉📐👈
+🤔📐🤏2️⃣
+🙏1️⃣
+🔚
+🙏📐*️⃣🧱🤙📐➖1️⃣📦
+🫷
+🪶🤙🧱🤙5️⃣📦📦
+```
+Résultat :
+
+`120`
+
+Les paramètres, et toute variable assignée dans le corps, sont locaux :
+ils disparaissent quand la fonction se termine et ne modifient jamais une
+variable de même nom à l'extérieur. Les variables définies à l'extérieur
+peuvent être lues. (Une liste donnée en paramètre n'est pas copiée : la
+modifier — avec 📨 par exemple — est visible à l'extérieur.)
+
+```
+🥕5️⃣
+🌏🍞👉👈
+🥕9️⃣
+🙏🥕
+🫷
+🪶🤙🍞🤙📦⛓️‍💥🥕📦
+```
+Résultat :
+
+`9 5`
+
+Une fonction est une variable ordinaire, comme celles qui contiennent
+`print` dans « Références de fonction » : on peut la réassigner, la copier
+dans une autre variable, la définir à nouveau, ou la définir par-dessus une
+variable qui contenait autre chose. L'afficher donne `<fonction NOM>` :
+
+```
+🌏💚👉👈
+🙏1️⃣
+🫷
+🥑💚
+💚5️⃣
+🪶🤙🥑🤙📦⛓️‍💥💚📦
+```
+Résultat :
+
+`1 5`
+
+Ici 🥑 a reçu une copie de la fonction, puis 💚 a été réassignée à un
+nombre.
+
+🙏 hors d'une fonction arrête le programme, tout comme une définition dont
+la première ligne n'a pas de 👉 … 👈. Une récursion peut aller à plusieurs
+centaines de niveaux.
+
+### Classes et objets
+Une classe est un modèle qui construit des objets. 🏛️ en définit une :
+écrivez 🏛️, le nom de la classe (un emoji inutilisé, ou une variable
+existante), puis, entre 👉 et 👈, les arguments de la classe. On peut omettre
+les arguments en même temps que 👉 👈. La classe est formée des lignes
+suivantes et se termine par une ligne contenant uniquement 🫷.
+
+Appeler la classe comme une fonction — 🤙 juste après son nom, puis les
+valeurs jusqu'à 📦 — crée un objet. Chaque valeur est rangée dans l'objet,
+sous l'emoji de l'argument correspondant, et 🔗 la lit : `🐕🔗🦴` est
+l'attribut 🦴 de l'objet 🐕.
+
+```
+🏛️🐶👉🦴🎂👈
+🫷
+🐕🐶🤙3️⃣⛓️‍💥5️⃣📦
+🪶🤙🐕🔗🦴⛓️‍💥🐕🔗🎂📦
+```
+Résultat :
+
+`3 5`
+
+Le ⛓️‍💥 garde les deux nombres séparés (voir « Types »). Le nom écrit après 🔗
+est un emoji pris tel quel : ce n'est pas forcément une variable. 🔗 est
+appliqué avant les opérateurs, comme 🎯, et les deux s'enchaînent de gauche à
+droite. Ici `😀🎯1️⃣🔗🦴` est l'attribut 🦴 du deuxième élément de la liste 😀,
+et ➕ utilise ensuite ce résultat :
+
+```
+🏛️🐶👉🦴👈
+🫷
+😀🌜🐶🤙1️⃣📦⛓️‍💥🐶🤙2️⃣📦🌛
+🪶🤙😀🎯1️⃣🔗🦴➕1️⃣0️⃣📦
+```
+Résultat :
+
+`12`
+
+Une ligne qui commence par un objet, 🔗, un nom et une valeur donne cette
+valeur à l'attribut — et crée l'attribut si l'objet ne l'avait pas. Comme pour
+les variables, seule la première valeur est conservée. Les attributs peuvent
+s'enchaîner pour atteindre un objet rangé dans un autre : `🐕🔗🐈🔗🦴`.
+
+```
+🏛️🐶👉🦴👈
+🫷
+🐕🐶🤙3️⃣📦
+🐕🔗🦴🐕🔗🦴➕1️⃣
+🐕🔗🎂9️⃣
+🪶🤙🐕🔗🦴⛓️‍💥🐕🔗🎂📦
+```
+Résultat :
+
+`4 9`
+
+Lire un attribut qui n'existe pas donne l'erreur Python `AttributeError`.
+
+#### Fonctions d'une classe
+Une fonction définie dans une classe (🌏 … 🫷, voir « Fonctions définies par
+l'utilisateur ») travaille sur les objets de la classe. Son premier paramètre
+reçoit l'objet (un emoji inutilisé quelconque — ici 🙋) ; les autres
+paramètres sont ceux écrits dans l'appel. Pour l'appeler, écrivez l'objet, 🔗,
+le nom de la fonction, puis 🤙 et les paramètres jusqu'à 📦 :
+
+```
+🏛️🐶👉🦴👈
+🌏🍖👉🙋🍎👈
+🙋🔗🦴🙋🔗🦴➕🍎
+🫷
+🌏🧺👉🙋👈
+🙏🙋🔗🦴
+🫷
+🫷
+🐕🐶🤙2️⃣📦
+🐕🔗🍖🤙3️⃣📦
+🪶🤙🐕🔗🧺🤙📦📦
+```
+Résultat :
+
+`5`
+
+L'objet placé devant 🔗 est donné automatiquement : il ne s'écrit donc pas
+entre 🤙 et 📦. Comme pour toute fonction, un appel seul sur une ligne —
+`🐕🔗🍖🤙3️⃣📦` — exécute la fonction et jette le résultat, et sans 🤙,
+`🐕🔗🍖` est une référence à la fonction, qu'on peut ranger dans une variable
+et appeler plus tard. Une fonction de classe peut appeler les autres par son
+premier paramètre, et peut s'appeler elle-même.
+
+#### Valeurs d'une classe
+Les lignes d'une classe qui ne sont pas des définitions de fonction
+s'exécutent une seule fois, quand la classe est définie, dans un espace à
+part : les variables qu'elles assignent n'existent pas en dehors de la
+classe. Elles deviennent des valeurs de la classe, que tous les objets de la
+classe peuvent lire — ainsi que la classe elle-même, avec 🔗. Donner à un
+objet un attribut du même nom masque la valeur pour cet objet seulement.
+
+```
+🏛️🐶👉👈
+🦴3️⃣
+🫷
+🐕🐶🤙📦
+🐈🐶🤙📦
+🐕🔗🦴7️⃣
+🪶🤙🐕🔗🦴⛓️‍💥🐈🔗🦴⛓️‍💥🐶🔗🦴📦
+```
+Résultat :
+
+`7 3 3`
+
+N'importe quelle ligne peut s'y trouver (un `if`, une boucle, un
+affichage...). Elles s'exécutent toutes une seule fois, à la définition, et
+pas pour chaque objet :
+
+```
+🏛️🐶👉👈
+🪶🤙🅾️🆖©️🔱📦
+🫷
+🐕🐶🤙📦
+🐈🐶🤙📦
+```
+Résultat :
+
+`once`
+
+#### Préparer un objet (🏗️)
+Une fonction nommée 🏗️ dans une classe s'exécute à chaque création d'objet,
+juste après le rangement des arguments, avec l'objet pour seul paramètre.
+C'est l'endroit où préparer ce dont chaque objet a besoin pour lui :
+
+```
+🏛️🐶👉🦴👈
+🌏🏗️👉🙋👈
+🙋🔗🎂🙋🔗🦴*️⃣2️⃣
+🫷
+🫷
+🐕🐶🤙4️⃣📦
+🪶🤙🐕🔗🦴⛓️‍💥🐕🔗🎂📦
+```
+Résultat :
+
+`4 8`
+
+Une valeur qui ne doit pas être partagée entre les objets — comme une liste —
+doit être créée là : écrite directement dans la classe (voir plus haut), ce
+serait la même liste pour tous les objets.
+
+```
+🏛️🐶👉👈
+🌏🏗️👉🙋👈
+🙋🔗🦴🌜🌛
+🫷
+🫷
+🐕🐶🤙📦
+🐈🐶🤙📦
+📨🤙🐕🔗🦴⛓️‍💥1️⃣📦
+🪶🤙🐕🔗🦴⛓️‍💥🐈🔗🦴📦
+```
+Résultat :
+
+`[1] []`
+
+🏗️ n'existe que comme nom d'une fonction dans une classe : ailleurs, c'est
+une erreur, comme pour tout emoji réservé.
+
+#### Les objets sont des valeurs
+Un objet est une valeur comme les autres : on peut le ranger dans une
+variable ou dans une liste, le donner à une fonction et le comparer. Afficher
+un objet, une classe ou le type d'un objet (🏷️) donne :
+
+```
+🏛️🐶👉👈
+🫷
+🐕🐶🤙📦
+🪶🤙🐕📦
+🪶🤙🐶📦
+🪶🤙🏷️🤙🐕📦📦
+```
+Résultat :
+
+`<objet 🐶>`
+
+`<classe 🐶>`
+
+`<classe 🐶>`
+
+Parcourir une liste d'objets et appeler leurs fonctions :
+
+```
+🏛️🐶👉🦴👈
+🌏🔊👉🙋👈
+🪶🤙🙋🔗🦴📦
+🫷
+🫷
+🌀🐕🌜🐶🤙1️⃣📦⛓️‍💥🐶🤙2️⃣📦🌛
+🐕🔗🔊🤙📦
+🫷
+```
+Résultat :
+
+`1`
+
+`2`
+
+Donné à une fonction, un objet n'est pas copié : changer ses attributs se voit
+à l'extérieur.
+
+```
+🏛️🐶👉🦴👈
+🫷
+🌏🧱👉🍎👈
+🍎🔗🦴9️⃣
+🫷
+🐕🐶🤙1️⃣📦
+🧱🤙🐕📦
+🪶🤙🐕🔗🦴📦
+```
+Résultat :
+
+`9`
+
+#### Erreurs et limites
+Une classe jamais fermée, et un en-tête sans nom ou dont le 👉 … 👈 n'est pas
+fermé, arrêtent le programme avec une erreur. Il en va de même pour 🏗️ en
+dehors d'une classe, pour 🙏 dans les lignes d'une classe (hors de ses
+fonctions), pour ⏭️ ou 🛑 y figurant hors d'une boucle, pour un mauvais nombre
+de valeurs à la création d'un objet (les erreurs habituelles des fonctions),
+pour 🔗 sans rien devant ou sans nom derrière, et pour une ligne `objet 🔗 nom`
+sans valeur.
+
+Il n'y a pas d'héritage. Une classe, comme une fonction, ne peut pas être
+donnée en paramètre à une autre fonction.
+
+### Erreurs (try / except / finally / raise)
+Certaines opérations échouent avec une erreur Python : diviser par zéro,
+convertir `abc` en nombre, lire un élément qui n'existe pas, demander à un
+objet un attribut qu'il n'a pas... Sans rien pour la traiter, une erreur
+arrête le programme et est signalée comme toutes les autres erreurs (voir
+« Messages d'erreur ») :
+
+```
+🪶🤙1️⃣➗0️⃣📦
+🪶🤙🅰️🎏™️🔱®️📦
+```
+Résultat :
+
+`💥 🫵 🐍 😭 🤡 🤣 🛴1️⃣`
+
+`Ligne 1 : Python a rencontré une erreur que rien n'a rattrapée : ZeroDivisionError : division by zero. Un bloc 🤞 avec un 😱 permet de la rattraper.`
+
+🤞 commence un bloc qui traite les erreurs, et 😱 dit quoi faire quand une
+erreur survient dans les lignes après 🤞. Le bloc se termine par 🔚 :
+
+```
+🤞
+🪶🤙1️⃣➗0️⃣📦
+😱😵
+🪶🤙😵📦
+🔚
+```
+Résultat :
+
+`division by zero`
+
+Quand une erreur survient, le reste des lignes après 🤞 est ignoré, les lignes
+après 😱 s'exécutent, et le programme continue après 🔚. 😱 est suivi de la
+variable qui reçoit l'erreur (un emoji inutilisé, ou une variable existante) :
+l'afficher montre son message, et elle garde l'erreur après le bloc.
+
+#### Choisir les erreurs
+Après la variable, 😱 peut nommer le genre d'erreur qu'il traite :
+
+| Emoji | Erreur Python | Levée par |
+|----|-------|------|
+| ⚠️ | `Exception` | toutes les erreurs |
+| 🙃 | `ValueError` | une mauvaise valeur, comme `int("abc")` |
+| 🧩 | `TypeError` | des valeurs qui ne vont pas ensemble, comme `1 + "a"` |
+| ♾️ | `ZeroDivisionError` | une division par zéro |
+| 📍 | `IndexError` | un indice hors de la liste |
+| 🗝️ | `KeyError` | une clé absente |
+| 🫥 | `AttributeError` | un attribut absent |
+
+Toute autre erreur de Python peut être trouvée par son nom avec 🔎, comme
+n'importe quel builtin (voir « Recherche dynamique »).
+
+```
+🤞
+🪶🤙🔢🤙🅰️🅱️©️📦📦
+😱😵♾️
+🪶🤙💤🔱®️🅾️📦
+😱😵🙃
+🪶🤙♈🅰️🛴⛎🔱📦
+🔚
+```
+Résultat :
+
+`value`
+
+Une erreur qu'aucun 😱 n'accepte continue son chemin : elle quitte le bloc, et
+arrête le programme si rien d'autre ne la traite. Les 😱 sont essayés dans
+l'ordre et seul le premier qui convient s'exécute. Pour accepter plusieurs
+genres d'erreur, donnez une liste :
+
+```
+🤞
+🪶🤙1️⃣➗0️⃣📦
+😱😵🌜🙃⛓️‍💥♾️🌛
+🪶🤙🛴ℹ️💲™️🔱🆔📦
+🔚
+```
+Résultat :
+
+`listed`
+
+Un 😱 sans type traite toutes les erreurs : il doit donc être le dernier, et
+on peut aussi omettre la variable :
+
+```
+🤞
+🪶🤙1️⃣➗0️⃣📦
+😱
+🪶🤙©️🅰️⛎🐍♓™️📦
+🔚
+```
+Résultat :
+
+`caught`
+
+On peut traiter les erreurs de Python et les valeurs levées avec 🚨 (voir
+plus bas). On ne peut pas traiter les erreurs du langage lui-même (emoji
+inconnu, mauvais nombre de paramètres, bloc mal fermé... ; voir « Messages
+d'erreur »), ni 🏁, qui n'est pas une erreur : il quitte le bloc, mais 🧹
+s'exécute d'abord.
+
+#### Sinon et finalement
+Dans un bloc 🤞, 😌 commence des lignes exécutées seulement si aucune erreur
+n'est survenue, et 🧹 des lignes exécutées dans tous les cas : après un
+succès, après une erreur traitée, quand l'erreur n'est pas traitée (juste
+avant l'arrêt du programme), et quand le bloc est quitté par 🙏, 🛑 ou ⏭️. Les
+parties se suivent dans cet ordre : 😱 (autant que nécessaire), 😌 (une fois,
+et seulement avec au moins un 😱), puis 🧹 (une fois). Un bloc 🤞 a besoin d'au
+moins un 😱 ou d'un 🧹, et une partie dans le désordre ou en trop arrête le
+programme avec une erreur, comme un bloc qui n'est pas fermé par 🔚.
+
+```
+🤞
+🪶🤙1️⃣📦
+😱😵
+🪶🤙2️⃣📦
+😌
+🪶🤙3️⃣📦
+🧹
+🪶🤙4️⃣📦
+🔚
+```
+Résultat :
+
+`1`
+
+`3`
+
+`4`
+
+Avec une erreur dans la première partie, 😌 est ignoré et 🧹 s'exécute quand même :
+
+```
+🤞
+🪶🤙1️⃣➗0️⃣📦
+😱😵
+🪶🤙2️⃣📦
+😌
+🪶🤙3️⃣📦
+🧹
+🪶🤙4️⃣📦
+🔚
+```
+Résultat :
+
+`2`
+
+`4`
+
+🧹 s'exécute aussi quand le bloc est quitté par 🙏 — la fonction renvoie quand même sa valeur :
+
+```
+🌏🧱👉👈
+🤞
+🙏1️⃣
+🧹
+🪶🤙🆔🅾️🆖🔱📦
+🔚
+🫷
+🪶🤙🧱🤙📦📦
+```
+Résultat :
+
+`done`
+
+`1`
+
+Et quand il est quitté par 🛑 ou ⏭️ dans une boucle :
+
+```
+🌀😀📏🤙5️⃣📦
+🤞
+🤔😀🟰2️⃣
+🛑
+🔚
+🪶🤙😀📦
+🧹
+🪶🤙🎏📦
+🔚
+🫷
+```
+Résultat :
+
+`0`
+
+`f`
+
+`1`
+
+`f`
+
+`f`
+
+#### Lever une erreur (🚨)
+🚨 lève la première valeur écrite après lui. Une erreur à laquelle on donne un
+message avec 🤙 porte ce message :
+
+```
+🤞
+🚨⚠️🤙🅱️🅾️🅾️Ⓜ️📦
+😱😵
+🪶🤙😵📦
+🔚
+```
+Résultat :
+
+`boom`
+
+Une classe d'erreur seule lève une nouvelle erreur de cette classe :
+
+```
+🤞
+🚨🙃
+😱😵🙃
+🪶🤙♈🅰️🛴⛎🔱📦
+🔚
+```
+Résultat :
+
+`value`
+
+N'importe quelle autre valeur peut être levée — un texte, un objet. Un 😱 sans
+type la reçoit telle quelle, et un 😱 avec un type la reçoit si c'est une
+valeur de ce type (🔤 pour un texte), ou si le type est ⚠️ :
+
+```
+🤞
+🚨🅾️🅾️🅿️💲
+😱😵
+🪶🤙😵📦
+🔚
+```
+Résultat :
+
+`oops`
+
+Lever un objet de votre propre classe donne des erreurs de votre propre
+genre :
+
+```
+🏛️🧨👉💬👈
+🫷
+🤞
+🚨🧨🤙Ⓜ️ℹ️🆖🔱📦
+😱😵🧨
+🪶🤙😵🔗💬📦
+🔚
+```
+Résultat :
+
+`mine`
+
+🚨 seul, dans un 😱, lève à nouveau l'erreur en cours de traitement, pour
+qu'un bloc 🤞 extérieur la traite :
+
+```
+🤞
+🤞
+🪶🤙1️⃣➗0️⃣📦
+😱😵
+🪶🤙ℹ️🆖🆖🔱®️📦
+🚨
+🔚
+😱🤕♾️
+🪶🤙🅾️⛎™️🔱®️📦
+🔚
+```
+Résultat :
+
+`inner`
+
+`outer`
+
+🚨 seul en dehors d'un 😱 donne l'erreur Python `RuntimeError`.
+
+### Messages d'erreur
+Une erreur dans un programme — un emoji inconnu, un bloc jamais fermé, un appel
+avec le mauvais nombre de valeurs, une erreur Python que rien ne traite... —
+l'arrête avec un message d'erreur. Toutes les erreurs s'affichent de la même
+façon, sur deux lignes :
+
+1. une ligne d'emojis qui se moque de vous, finie par 🛴 et le numéro de la
+   ligne de `a.txt` où se trouve l'erreur (🛴 est la lettre `l` : `🛴8️⃣0️⃣` se
+   lit « l80 », ligne 80) ;
+2. en dessous, une description détaillée en toutes lettres, qui commence par
+   `Ligne` et le même numéro.
+
+Les deux lignes vont sur la sortie standard et le programme se termine avec le
+code de sortie 1. Pour trouver la ligne d'une erreur, lisez les chiffres après le
+dernier 🛴 de la première ligne.
+
+```
+😶 a comment
+
+🪶🤙🥭📦
+```
+Résultat :
+
+`🤡 🫵 🔍 🥭 🧠 🕳️ 🤣 🛴3️⃣`
+
+`Ligne 3 : l'emoji 🥭 est inconnu. Ce n'est ni une valeur, ni une fonction, ni un mot-clé du langage, et aucune variable ne porte ce nom. Une variable se crée en début de ligne, suivie de sa valeur, et il faut la créer avant de s'en servir.`
+
+Le numéro de ligne est celui qu'affiche un éditeur : les commentaires, les
+lignes vides et les lignes sans aucun emoji comptent. C'est la ligne où
+l'erreur se produit — dans une fonction, la ligne dans le corps de la
+fonction ; pour un bloc jamais fermé, la ligne qui ouvre le bloc. Ce que le
+programme a affiché avant l'erreur reste affiché :
+
+```
+🪶🤙🅰️📦
+🌀😀📏🤙3️⃣📦
+🪶🤙😀📦
+```
+Résultat :
+
+`a`
+
+`🤡 🫵 🚪 🔓 🫷 ❌ 🐌 🛴2️⃣`
+
+`Ligne 2 : le bloc ouvert ici par 🌀 n'est jamais fermé. Chaque boucle (🌀, 🤗), fonction (🌏) et classe (🏛️) se termine par une ligne contenant uniquement 🫷.`
+
+```
+🌏🧱👉👈
+🪶🤙🥭📦
+🫷
+🧱🤙📦
+```
+Résultat :
+
+`🤡 🫵 🔍 🥭 🧠 🕳️ 🤣 🛴2️⃣`
+
+`Ligne 2 : l'emoji 🥭 est inconnu. Ce n'est ni une valeur, ni une fonction, ni un mot-clé du langage, et aucune variable ne porte ce nom. Une variable se crée en début de ligne, suivie de sa valeur, et il faut la créer avant de s'en servir.`
+
+Une erreur qui vient de Python lui-même — une division par zéro, une mauvaise
+conversion, un indice hors d'une liste... — et qu'aucun bloc 🤞 ne traite est
+signalée de la même façon, et sa description se termine par le nom et le
+message de l'erreur Python. Il en va de même pour une valeur levée avec 🚨 que
+rien ne traite. (Mettre la variable d'environnement `UWU_DEBUG` à `1` affiche à
+la place l'erreur complète de Python : cela aide à chercher un bug de
+l'interpréteur lui-même.)
+
+```
+🪶🤙1️⃣➗0️⃣📦
+🪶🤙🅰️🎏™️🔱®️📦
+```
+Résultat :
+
+`💥 🫵 🐍 😭 🤡 🤣 🛴1️⃣`
+
+`Ligne 1 : Python a rencontré une erreur que rien n'a rattrapée : ZeroDivisionError : division by zero. Un bloc 🤞 avec un 😱 permet de la rattraper.`
+
+Voici tous les messages, avec leur ligne d'emojis (sans le 🛴 final ni le
+numéro ; 🥭 représente l'emoji concerné) et leur cause :
+
+| Ligne d'emojis | Cause |
+|----|------|
+| 🤡 🫵 🔍 🥭 🧠 🕳️ 🤣 | Un emoji qui n'est ni une variable (déjà définie), ni une valeur, ni une fonction, ni un mot-clé est utilisé dans une expression. |
+| 🙄 🫵 🔑 🥭 🚫 🎁 🤦 | Un mot-clé (🤔, 🌀, 🫷...) est utilisé comme valeur, au milieu d'une expression. |
+| 🤦 🫵 🔗 👻 ➡️ 🤡 | 🔗 sans rien devant lui (ou seulement un opérateur ou un séparateur). |
+| 🙄 🫵 🔗 ❓ 🏷️ 🤡 | 🔗 sans nom d'attribut après lui. |
+| 🤏 🫵 🧱 🍼 📦 🤡 | Une fonction (ou une classe) est appelée avec moins de valeurs qu'il n'en faut. |
+| 🤯 🫵 🧱 🐘 📦 🤡 | Une fonction (ou une classe) est appelée avec plus de valeurs qu'elle n'en accepte. |
+| 🙄 🫵 📛 🪪 🕳️ 🤡 | 📛 sans nom avant lui. |
+| 🤦 🫵 📛 🎁 🕳️ 🤡 | 📛 sans valeur après lui. |
+| 🙄 🫵 ➕ 👻 🤡 🧮 | Un opérateur au début d'une expression ou d'une ligne. |
+| 🤦 🫵 ➕ 🕳️ 👻 🤡 | Un opérateur à la fin d'une expression. |
+| 🙄 🫵 🕳️ 🪹 💤 🤡 | Un nom, ou 🤔 😏 🤗, sans rien à évaluer après lui. |
+| 🙄 🫵 🔗 🕳️ 🪹 🤡 | `objet 🔗 nom` sans valeur après le nom. |
+| 🤡 🫵 🚪 🔓 🫷 ❌ 🐌 | Une boucle, une fonction ou une classe qu'aucun 🫷 ne ferme (la ligne est celle qui l'ouvre). |
+| 🙄 🫵 🫷 🚪 🚫 🤡 | Un 🫷 alors qu'aucune boucle, fonction ou classe n'est ouverte. |
+| 🤦 🫵 🥭 🤔 ❓ 🤡 | Un 😏, 😌 ou 🔚 en dehors d'un bloc 🤔 (ou d'un bloc 🤞 pour 😌 et 🔚). |
+| 🙄 🫵 🥭 🤞 ❓ 🤡 | Un 😱 ou 🧹 en dehors d'un bloc 🤞. |
+| 🤯 🫵 😏 😌 🔀 🤡 | 😏 ou 😌 dans le mauvais ordre dans un bloc 🤔 (deux 😌, par exemple). |
+| 🤡 🫵 🤔 🚪 🔚 ❌ 🐌 | Un bloc 🤔 qu'aucun 🔚 ne ferme. |
+| 🤦 🫵 🫷 🧩 🚫 🤡 | Un 🫷 alors qu'un bloc 🤔 est encore ouvert à l'intérieur du bloc qu'il fermerait. |
+| 🤡 🫵 🥭 🔒 🚫 😂 | Un emoji du langage est utilisé comme nom de variable, de fonction, de paramètre, de classe, de variable de boucle ou d'erreur. |
+| 🙄 🫵 🌀 🔁 ❓ 🤡 | Un 🌀 sans variable de boucle ou sans rien à parcourir. |
+| 🙄 🫵 🤗 🔁 ❓ 🤡 | Un 🤗 sans condition. |
+| 🙄 🫵 🌏 🌍 ❓ 🤡 | La première ligne d'une fonction n'est pas 🌏 nom 👉 paramètres 👈. |
+| 🤦 🫵 👯 🌏 🤡 | Deux paramètres d'une fonction ont le même emoji. |
+| 🙄 🫵 🏛️ 🧱 ❓ 🤡 | La première ligne d'une classe n'est pas 🏛️ nom (👉 arguments 👈). |
+| 🤦 🫵 👯 🏛️ 🤡 | Deux arguments d'une classe ont le même emoji. |
+| 🤦 🫵 🤞 🪤 🕳️ 🤡 | Un bloc 🤞 sans 😱 ni 🧹. |
+| 🤯 🫵 🤞 😱 😌 🧹 🔀 🤡 | 😱, 😌, 🧹 dans le mauvais ordre, ou en trop, dans un bloc 🤞. |
+| 🙄 🫵 😱 🕸️ 🔚 🤡 | Un 😱 sans type qui n'est pas le dernier 😱. |
+| 🤡 🫵 🤞 🚪 🔚 ❌ 🐌 | Un bloc 🤞 qu'aucun 🔚 ne ferme. |
+| 🤦 🫵 🤞 🧩 🚫 🔚 🤡 | Un bloc 🤞 fermé par 🫷, ou avec un autre bloc encore ouvert à l'intérieur. |
+| 🙄 🫵 🙏 🏃 🚪 ❓ 🤡 | 🙏 en dehors d'une fonction. |
+| 🙄 🫵 🛑 🔁 ❓ 🤡 | 🛑 en dehors d'une boucle. |
+| 🙄 🫵 ⏭️ 🔁 ❓ 🤡 | ⏭️ en dehors d'une boucle. |
+| 🤦 🫵 🥭 🤙 ❓ 🙈 🤡 | Une ligne qui commence par une fonction du langage mais sans 🤙. |
+| 🙄 🫵 🥭 🧱 ❓ 🤡 | Une ligne qui commence par une valeur (une lettre, un chiffre, 🟢...). |
+| 🤡 🫵 🥭 🪑 ❓ 😂 | Un mot-clé qui ne peut pas commencer une ligne (🔗, 🤙, 📦, 🏗️...). |
+| 💥 🫵 🐍 😭 🤡 🤣 | Une erreur de Python que rien ne traite (division par zéro, mauvaise conversion, indice hors de la liste, attribut absent, 🔎 mal utilisé...). |
+| 💥 🫵 🚨 🗑️ 🤡 🤣 | Une valeur levée avec 🚨 que rien ne traite. |
+
+### Récapitulatif des mots-clés
+
+| Emoji | Rôle |
+|----|------|
+| 🌀 | boucle `for` : `🌀 variable séquence` |
+| 🤗 | boucle `while` : `🤗 condition` |
+| ⏭️ | `continue` |
+| 🛑 | `break` |
+| 🫷 | fin d'une boucle, d'une fonction ou d'une classe (seul sur sa ligne) |
+| 🌏 | définition de fonction : `🌏 nom 👉 paramètres 👈` |
+| 🙏 | `return` |
+| 🏛️ | définition de classe : `🏛️ nom 👉 arguments 👈` |
+| 🏗️ | nom de la fonction qui prépare chaque nouvel objet (dans une classe) |
+| 🔗 | attribut d'un objet : `objet 🔗 nom` |
+| 🤔 😏 😌 🔚 | `if`, `elif`, `else`, fin d'un `if` |
+| 🤞 | `try` |
+| 😱 | `except` : `😱 variable type` |
+| 😌 | `else` d'un `try` |
+| 🧹 | `finally` |
+| 🔚 | fin d'un `try` |
+| 🚨 | `raise` |
+
 ### Feuille de route (pas encore implémenté)
-Le code source de l'interpréteur (`b.py`) contient des commentaires
-décrivant des fonctionnalités toujours prévues mais **pas encore
-disponibles** :
+Le code source de l'interpréteur (`b.py`) ne liste plus aucune fonctionnalité
+prévue. Le support des nombres aléatoires, les appels façon objet/attribut,
+les paramètres nommés, les boucles `for` et `while`, les fonctions définies
+par l'utilisateur, la création d'objets (classes), les erreurs (`try`,
+`except`, `finally`, `raise`) et un grand nombre de caractères spéciaux
+figuraient auparavant ici comme prévus — ils sont maintenant implémentés (voir
+les sections ci-dessus).
 
-- Boucles `for` (emoji prévu : 🌀)
-- Boucles `while` (emoji prévu : 🤗)
-- Fonctions définies par l'utilisateur avec paramètres et `return`
-  (emojis prévus : 🌏, 🙏, 🔃 — 👉/👈 avaient aussi été envisagés pour
-  ça, mais sont désormais réutilisés pour `{`/`}`)
-- Création d'objets
-
-Le support des nombres aléatoires, les appels façon objet/attribut, et
-un grand nombre de caractères spéciaux figuraient auparavant ici comme
-prévus — ils sont maintenant implémentés (🎲/🎰/🎁/⏳, 🐙, et la table de
-ponctuation ci-dessus).
-
-Ne comptez pas sur ce qu'il reste ci-dessus : les utiliser aujourd'hui
-échouera, car ils ne sont pas encore enregistrés dans la table de
-conversion.
+Ce que Python a encore et pas UwU Script : l'héritage, les valeurs par défaut
+des paramètres, les fonctions données en argument (donc `map`, `filter` ou
+`sorted(key=...)` ne peuvent pas recevoir de fonction), `lambda`, les
+compréhensions, les générateurs (`yield`), `with`, `global`, les décorateurs,
+les littéraux de dictionnaire, de tuple et d'ensemble, l'affectation à un
+élément d'une liste, les comparaisons `>=` et `<=`, et les `and` / `or`
+court-circuités (les deux côtés sont toujours évalués).
